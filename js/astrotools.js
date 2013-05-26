@@ -17,26 +17,26 @@ var AstroTools = (function() {
 		},
 		VOMode: function(mode) {
 			switch (mode) {
-			  case 'on':
-				  $('#astrotools-ui-container .vo-mode-indicator').text('on');
-				  $('#astrotools-ui-container .vo-mode-switcher')
-				  	.text('off')
-				  	.off('click')
-				  	.click( disconnect )
-						.removeAttr('disabled');
-				  break;
-			  case 'connecting':
-				  $('#astrotools-ui-container .vo-mode-indicator').text('connecting');
-				  $('#astrotools-ui-container .vo-mode-switcher').attr('disabled', 'disabled');
-			    break;
-			  case 'off':
-				  $('#astrotools-ui-container .vo-mode-indicator').text('off')
+				case 'on':
+					$('#astrotools-ui-container .vo-mode-indicator').text('on');
 					$('#astrotools-ui-container .vo-mode-switcher')
-				  	.text('on')
-				  	.off('click')
-				  	.click( connect )
-				  	.removeAttr('disabled');
-			    break;
+						.text('off')
+						.off('click')
+						.click( function() { session.set('VOMode', '0'); disconnect(); } )
+						.removeAttr('disabled');
+					break;
+				case 'connecting':
+					$('#astrotools-ui-container .vo-mode-indicator').text('connecting');
+					$('#astrotools-ui-container .vo-mode-switcher').attr('disabled', 'disabled');
+					break;
+				case 'off':
+					$('#astrotools-ui-container .vo-mode-indicator').text('off')
+					$('#astrotools-ui-container .vo-mode-switcher')
+						.text('on')
+						.off('click')
+						.click( function() { session.set('VOMode', '1'); connect(); } )
+						.removeAttr('disabled');
+					break;
 			}
 		},
 		updateClientList: function() {
@@ -57,8 +57,7 @@ var AstroTools = (function() {
 		UI.init();
 		$(window).unload( disconnect );
 		//NB can we check seesion for previous connection and re-use it?
-		//if ( session.VOMode == 'on' ) connect();
-		connect();
+		if ( session.get('VOMode') == 1 ) connect();
 		
 		AstroTools.isStarted = true;
 	}
@@ -106,45 +105,34 @@ var AstroTools = (function() {
 		}
 	}
 
-	// simple functions for cookies from http://www.w3schools.com/js/js_cookies.asp
-	function setCookie( c_name, value, exdays ) {
-		var exdate=new Date();
-		exdate.setDate(exdate.getDate() + exdays);
-		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-		document.cookie=c_name + "=" + c_value;
-	}
-
-	function getCookie( c_name ) {
-		var c_value = document.cookie;
-		var c_start = c_value.indexOf(" " + c_name + "=");
-		if (c_start == -1) {
-			c_start = c_value.indexOf(c_name + "=");
-		}
-		if (c_start == -1) {
-			c_value = null;
-		}
-		else {
-			c_start = c_value.indexOf("=", c_start) + 1;
-			var c_end = c_value.indexOf(";", c_start);
-			if (c_end == -1) {
-				c_end = c_value.length;
+	//TODO use web storage and fallback to cookies or server-side session
+  var session = {
+		// simple functions for cookies from http://www.w3schools.com/js/js_cookies.asp
+		set: function( c_name, value, exdays ) {
+			var exdate=new Date();
+			exdate.setDate(exdate.getDate() + exdays);
+			var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+			document.cookie=c_name + "=" + c_value;
+		},
+		get: function ( c_name ) {
+			var c_value = document.cookie;
+			var c_start = c_value.indexOf(" " + c_name + "=");
+			if (c_start == -1) {
+				c_start = c_value.indexOf(c_name + "=");
 			}
-			c_value = unescape(c_value.substring(c_start,c_end));
+			if (c_start == -1) {
+				c_value = null;
+			}
+			else {
+				c_start = c_value.indexOf("=", c_start) + 1;
+				var c_end = c_value.indexOf(";", c_start);
+				if (c_end == -1) {
+					c_end = c_value.length;
+				}
+				c_value = unescape(c_value.substring(c_start,c_end));
+			}
+			return c_value;
 		}
-		return c_value;
-	}
-
-  var cookie = {
-    pwscOn: function(){ return document.cookie.match(/\bPWSC=1\b/) },
-    set: function(){ document.cookie = 'PWSC=1;path=/' },
-    unset: function(){document.cookie = 'PWSC=0;path=/' },
-    hasTableId: function(id) { return $A(this.getTables()).include(id); },
-    addTableId: function(id) { document.cookie = 'PWSCTables=' + this.getTables().concat(id).join('|') + ';path=/'; },
-    getTables: function(id) {
-      var match = document.cookie.match(/\bPWSCTables=(.*?)(;|$)/);
-      if (!match) return [];
-      return match[1].split('|');
-    }
   };
 
 	return {
