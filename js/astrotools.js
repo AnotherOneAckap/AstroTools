@@ -2,12 +2,12 @@ var AstroTools = (function() {
 	var SAMPConnection;
 	var ClientTracker;
 	var waitingForHub;
+	var isHubOnlineInterval;
 	var defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp';
 
 	var UI = {
 		init: function() {
-			$('body').append('<div id="astrotools-ui-container"><div class="vo-mode-indicator"></div><button class="vo-mode-switcher"></button></div>');
-			$('body').append('<ul id="astrotools-client-list">');
+			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><ul id="astrotools-client-list"></ul></div>');
 			if ( SAMPConnection ) {
 				UI.VOMode('on');
 			}
@@ -22,7 +22,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.click( function() { session.set('VOMode', '0'); disconnect(); } )
+						.on( 'click', function() { session.set('VOMode', '0'); disconnect(); } )
 						.removeAttr('disabled');
 					break;
 				case 'connecting':
@@ -34,7 +34,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('on')
 						.off('click')
-						.click( function() { session.set('VOMode', '1'); connect(); } )
+						.on( 'click', function() { session.set('VOMode', '1'); connect(); } )
 						.removeAttr('disabled');
 					break;
 			}
@@ -42,7 +42,11 @@ var AstroTools = (function() {
 		updateClientList: function() {
 			$('#astrotools-client-list').html('');
 			$.each( ClientTracker.metas, function( id, meta ) {
-				$('#astrotools-client-list').append( $('<li>', { text: meta['samp.name'] } ) );
+				if ( meta['samp.name'] && id != 'hub' ) {
+					$('#astrotools-client-list').append(
+						 $('<li>', { text: meta['samp.name'], title: meta['samp.description.text'] } ).prepend( $('<img>', { src: meta['samp.icon.url'] } ) )
+					);
+				}
 			});
 		},
 		clearClientList: function() {
@@ -63,6 +67,10 @@ var AstroTools = (function() {
 	}
 
 	function connect() {
+		if ( SAMPConnection && SAMPConnection.closed == false ) {
+			UI.VOMode('on');
+			return; 
+		}
 		UI.VOMode('connecting');
 		samp.register( 'AstroTools', onConnect, onConnectionError );
 	}
@@ -82,14 +90,31 @@ var AstroTools = (function() {
 		ClientTracker.onchange = UI.updateClientList;
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
+		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
 		UI.VOMode('on');
 	}
 
+	function onHubCheck( result ) {
+		if ( ! result ) {
+			disconnect();
+			clearInterval( isHubOnlineInterval );
+		}
+	}
+
 	function declareMetadata() {
-		SAMPConnection.declareMetadata([{ 'samp.name': 'AstroTools', 'samp.description': 'Simple toolbox' }]);
+		SAMPConnection.declareMetadata([{
+			'samp.name': 'AstroTools',
+			'samp.description': 'Simple toolbox',
+			'samp.icon.url': location.href + '/img/icon.png'
+		}]);
 	}
 
 	function onConnectionError( e ) {
+		if ( e.faultCode == 1 ) {
+			alert('Unable to connect to hub.');
+			UI.VOMode('off');
+			return;
+		}
 		// launch defined samp hub through jnlp
 		$('<iframe>', {src: defaultHubUrl, style: 'width:0; height:0;'}).appendTo('body');
 		waitingForHub = setInterval(function() {samp.ping( onPingResult );}, 5000);
