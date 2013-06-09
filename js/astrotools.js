@@ -42,7 +42,7 @@ var AstroTools = (function() {
 		updateClientList: function() {
 			$('#astrotools-client-list').html('');
 			$.each( ClientTracker.metas, function( id, meta ) {
-				if ( meta['samp.name'] && id != 'hub' ) {
+				if ( meta['samp.name'] && id != 'hub' && meta['samp.name'] != 'AstroTools' ) {
 					$('#astrotools-client-list').append(
 						 $('<li>', { text: meta['samp.name'], title: meta['samp.description.text'] } ).prepend( $('<img>', { src: meta['samp.icon.url'] } ) )
 					);
@@ -59,7 +59,9 @@ var AstroTools = (function() {
 		
 		defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
 		UI.init();
-		$(window).unload( disconnect );
+		// if we store private-key on cookies we no need anymore to disconnect on unload
+		// $(window).unload( disconnect );
+
 		//NB can we check seesion for previous connection and re-use it?
 		if ( session.get('VOMode') == 1 ) connect();
 		
@@ -67,18 +69,33 @@ var AstroTools = (function() {
 	}
 
 	function connect() {
+		UI.VOMode('connecting');
+		var pk = session.get('PrivateKey');
+		if ( pk && pk != undefined ) {
+			onConnect( new samp.Connection({ 'samp.private-key': pk }) );
+			return;
+		}
 		if ( SAMPConnection && SAMPConnection.closed == false ) {
 			UI.VOMode('on');
 			return; 
 		}
-		UI.VOMode('connecting');
 		samp.register( 'AstroTools', onConnect, onConnectionError );
 	}
 
+	function onError() {
+		SAMPConnection.close;
+		session.set( 'PrivateKey', '' );
+		UI.VOMode('off');
+		UI.clearClientList();
+	}
+
+	function noop() {	}
+
 	function disconnect() {
-		if ( SAMPConnection ) {
+		/*if ( SAMPConnection ) {
 			SAMPConnection.close();
-		}
+		}*/
+		SAMPConnection = undefined;
 		UI.VOMode('off');
 		UI.clearClientList();
 	}
@@ -90,7 +107,8 @@ var AstroTools = (function() {
 		ClientTracker.onchange = UI.updateClientList;
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
-		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
+		//DBG isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
+		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
 		UI.VOMode('on');
 	}
 
@@ -106,7 +124,7 @@ var AstroTools = (function() {
 			'samp.name': 'AstroTools',
 			'samp.description': 'Simple toolbox',
 			'samp.icon.url': location.href + '/img/icon.png'
-		}]);
+		}], noop, onError );
 	}
 
 	function onConnectionError( e ) {
