@@ -65,7 +65,38 @@ var AstroTools = (function() {
 		//NB can we check seesion for previous connection and re-use it?
 		if ( session.get('VOMode') == 1 ) connect();
 		
+		makeLinksBroadcastable();
+
 		AstroTools.isStarted = true;
+	}
+
+	function makeLinksBroadcastable() {
+		$('.vo-table-link').on( 'mouseover', function() {
+			if ( ! SAMPConnection || SAMPConnection.closed ) return;
+			var $link = $(this);
+			if ( $link.next('.vo-broadcast-button').length ) return;
+			var $button = $('<button>', { 'type': 'button', 'text': 'Broadcast', 'class': 'vo-broadcast-button' });
+			$link.after($button);
+			$button.on('click', function() {
+				var params = {'url': $link.attr('href')};
+				if ( $link.attr('data-vo-table-id') ) params['table-id'] = $link.attr('data-vo-table-id');
+				if ( $link.attr('data-vo-table-name') ) params['name'] = $link.attr('data-vo-table-name');
+
+      	var message = new samp.Message('table.load.votable', params);
+	      SAMPConnection.notifyAll([message]);
+			});
+		});
+
+		$('.vo-table-link').on( 'mouseout', function(e) {
+			console.log(e);
+			var $button = $(this).next('.vo-broadcast-button');
+			if ( $(e.relatedTarget) == $button ) {
+			    return false;
+			}
+			else {
+			    setTimeout( function() { $button.remove(); }, 3000 );
+			}
+		});
 	}
 
 	function connect() {
@@ -107,7 +138,7 @@ var AstroTools = (function() {
 		ClientTracker.onchange = UI.updateClientList;
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
-		//DBG isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
+		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
 		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
 		UI.VOMode('on');
 	}
