@@ -82,7 +82,11 @@ var AstroTools = (function() {
 			var $button = $('<button>', { 'type': 'button', 'text': 'Broadcast', 'class': 'vo-broadcast-button' });
 			$link.after($button);
 			$button.on('click', function() {
-				var params = {'url': $link.attr('href')};
+				var url = $link.attr('href');
+				// href may be full url, path relative host root (href="/foo") 
+				// or path relative current location (href="bar")
+				url = url.substr(1) == '/' ? url.substr(4) == 'http' ? url : location.href.replace(/\/+[^/]+$/,'') + url : location.protocol + '//' + location.host + url;
+				var params = {'url': url};
 				if ( $link.attr('data-vo-table-id') ) params['table-id'] = $link.attr('data-vo-table-id');
 				if ( $link.attr('data-vo-table-name') ) params['name'] = $link.attr('data-vo-table-name');
 
