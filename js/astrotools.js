@@ -158,8 +158,7 @@ var AstroTools = (function() {
 		SAMPConnection.declareMetadata([{
 			'samp.name': 'AstroTools',
 			'samp.description': 'Simple toolbox',
-			'samp.icon.url': location.href + '/img/icon.png'
-// неправильно работает для href = /index.html даёт /index.html/img/icon.png
+			'samp.icon.url': ( location.href.substr(-1) == '/' ? location.href : location.href.replace( /[^/]+$/, '' ) ) + 'img/icon.png'
 		}], noop, onError );
 	}
 
