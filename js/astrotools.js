@@ -131,9 +131,10 @@ var AstroTools = (function() {
 	function noop() {	}
 
 	function disconnect() {
-		/*if ( SAMPConnection ) {
+		if ( SAMPConnection ) {
 			SAMPConnection.close();
-		}*/
+			session.set( 'PrivateKey', '' );
+		}
 		SAMPConnection = undefined;
 		UI.VOMode('off');
 		UI.clearClientList();
