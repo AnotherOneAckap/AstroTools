@@ -27,7 +27,11 @@ var AstroTools = (function() {
 					break;
 				case 'connecting':
 					$('#astrotools-ui-container .vo-mode-indicator').text('connecting');
-					$('#astrotools-ui-container .vo-mode-switcher').attr('disabled', 'disabled');
+					$('#astrotools-ui-container .vo-mode-switcher')
+						.text('off')
+						.off('click')
+						.on( 'click', function() { session.set('VOMode', '0'); disconnect(); } )
+						.removeAttr('disabled');
 					break;
 				case 'off':
 					$('#astrotools-ui-container .vo-mode-indicator').text('off')
@@ -62,7 +66,7 @@ var AstroTools = (function() {
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
 
-		//NB can we check seesion for previous connection and re-use it?
+		//NB can we check session for previous connection and re-use it?
 		if ( session.get('VOMode') == 1 ) connect();
 		
 		makeLinksBroadcastable();
@@ -155,6 +159,7 @@ var AstroTools = (function() {
 			'samp.name': 'AstroTools',
 			'samp.description': 'Simple toolbox',
 			'samp.icon.url': location.href + '/img/icon.png'
+// неправильно работает для href = /index.html даёт /index.html/img/icon.png
 		}], noop, onError );
 	}
 
@@ -165,7 +170,7 @@ var AstroTools = (function() {
 			return;
 		}
 		// launch defined samp hub through jnlp
-		$('<iframe>', {src: defaultHubUrl, style: 'width:0; height:0;'}).appendTo('body');
+		$('<iframe>', {frameborder: 0,src: defaultHubUrl, style: 'width:0; height:0;'}).appendTo('body');
 		waitingForHub = setInterval(function() {samp.ping( onPingResult );}, 5000);
 	}
 
