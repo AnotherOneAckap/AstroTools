@@ -6,8 +6,2928 @@
 	</head>
 	<body>
 		<a class="vo-table-link" data-vo-table-id="123456" href="http://andromeda.star.bris.ac.uk/data/messier.xml" data-vo-table-name="Exampe table">Table</a>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="js/samp.js"></script>
-		<script src="js/astrotools.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/samp.js"></script>
+		<script type="text/javascript" src="js/astrotools.js"></script>
+		<script type="text/javascript">
+			$( function() {
+				AstroTools.tableId = 'data';
+				AstroTools.init();
+			});
+		</script>
+<table class="catalog" width="100%" id="data"
+ data-vo-table-id="cluster_list"
+ data-vo-table-name="SAI OCL Catalog"
+ data-vo-table-url="http://ocl.sai.msu.ru/catalog/votable/">
+<colgroup>
+<col>
+<col>
+<col class="coords">
+<col class="coords">
+<col>
+<col>
+<col>
+<col>
+<col>
+<col></colgroup>
+<tbody>
+<tr>
+<th data-type="string" class="name">Name</th>
+<th data-type="string" class="name">Other name</th>
+<th data-type="sexagesimal">&#206;&#177;<sub>2000</sub>&nbsp;</th>
+<th data-type="sexagesimal">&#206;&#180;<sub>2000</sub></th>
+<th>l</th>
+<th>b</th>
+<th>Diameter &#226;&#8211;&#189;</th>
+<th>Distance</th>
+<th>E(B-V)</th>
+<th>log(t)</th>
+</tr>
+<tr name="tr1" data-index="83" data-coords="06:07:27.8 +24:05:53"
+data-name="NGC 2158" data-radius="13.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_2158/">NGC 2158</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:07:27.8</td>
+<td>+24:05:53</td>
+<td>186.638</td>
+<td>1.791</td>
+<td>15.0</td>
+<td>3300 &#194;&#177; 300</td>
+<td>0.34 &#194;&#177; 0.03</td>
+<td>9.3 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="154" data-coords="11:14:20.2 -57:33:04"
+data-name="Trumpler 19" data-radius="12.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/trumpler_19/">Trumpler 19</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>11:14:20.2</td>
+<td>-57:33:04</td>
+<td>290.172</td>
+<td>2.895</td>
+<td>14.0</td>
+<td>1900 &#194;&#177; 50</td>
+<td>0.08 &#194;&#177; 0.01</td>
+<td>9.65 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="1" data-coords="00:10:16.8 +61:10:39"
+data-name="King 13" data-radius="9.000">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_13/">King 13</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:10:16.8</td>
+<td>+61:10:39</td>
+<td>117.991</td>
+<td>-1.299</td>
+<td>10.0</td>
+<td>2960 &#194;&#177; 400</td>
+<td>0.56 &#194;&#177; 0.04</td>
+<td>8.85 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="131" data-coords="08:44:34.5 -35:54:00"
+data-name="Ruprecht 68" data-radius="9.000">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ruprecht_68/">Ruprecht 68</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:44:34.5</td>
+<td>-35:54:00</td>
+<td>257.264</td>
+<td>4.257</td>
+<td>10.0</td>
+<td>1990 &#194;&#177; 80</td>
+<td>0.39 &#194;&#177; 0.05</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="179" data-coords="20:55:55.3 +51:02:54"
+data-name="Berkeley 53" data-radius="9.000">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_53/">Berkeley 53</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>20:55:55.3</td>
+<td>+51:02:54</td>
+<td>90.293</td>
+<td>3.752</td>
+<td>10.0</td>
+<td>3530 &#194;&#177; 220</td>
+<td>1.31 &#194;&#177; 0.2</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="180" data-coords="20:56:43.0 +46:53:15"
+data-name="SAI 138" data-radius="9.000">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_138/">SAI 138</a></td>
+<td class="name">FSR 275</td>
+<td>20:56:43.0</td>
+<td>+46:53:15</td>
+<td>87.205</td>
+<td>0.957</td>
+<td>10.0</td>
+<td>2490 &#194;&#177; 130</td>
+<td>0.76 &#194;&#177; 0.05</td>
+<td>9.25 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="198" data-coords="23:33:12.0 +58:28:29"
+data-name="King 20" data-radius="9.000" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_20/">King 20</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>23:33:12.0</td>
+<td>+58:28:29</td>
+<td>112.838</td>
+<td>-2.855</td>
+<td>10.0</td>
+<td>1750 &#194;&#177; 80</td>
+<td>0.77 &#194;&#177; 0.05</td>
+<td>8.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="58" data-coords="05:36:50.6 +31:12:39"
+data-name="Koposov 36" data-radius="8.100">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_36/">Koposov 36</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:36:50.6</td>
+<td>+31:12:39</td>
+<td>177.065</td>
+<td>-0.407</td>
+<td>9.0</td>
+<td>1700 &#194;&#177; 150</td>
+<td>0.83 &#194;&#177; 0.11</td>
+<td>&lt; 8.35</td>
+</tr>
+<tr name="tr1" data-index="77" data-coords="06:00:56.2 +35:16:36"
+data-name="Koposov 12" data-radius="8.100">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_12/">Koposov 12</a></td>
+<td class="name">FSR 802</td>
+<td>06:00:56.2</td>
+<td>+35:16:36</td>
+<td>176.160</td>
+<td>6.000</td>
+<td>9.0</td>
+<td>2050 &#194;&#177; 50</td>
+<td>0.3 &#194;&#177; 0.03</td>
+<td>8.9 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="12" data-coords="00:57:12.4 +62:06:18"
+data-name="SAI 11" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_11/">SAI 11</a></td>
+<td class="name">FSR 524</td>
+<td>00:57:12.4</td>
+<td>+62:06:18</td>
+<td>123.607</td>
+<td>-0.759</td>
+<td>8.0</td>
+<td>1380 &#194;&#177; 200</td>
+<td>0.51 &#194;&#177; 0.13</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="14" data-coords="01:19:37.6 +63:03:20"
+data-name="SAI 13" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_13/">SAI 13</a></td>
+<td class="name">FSR 536</td>
+<td>01:19:37.6</td>
+<td>+63:03:20</td>
+<td>126.119</td>
+<td>0.358</td>
+<td>8.0</td>
+<td>3000 &#194;&#177; 250</td>
+<td>1.27 &#194;&#177; 0.23</td>
+<td>&lt; 8.2</td>
+</tr>
+<tr name="tr1" data-index="41" data-coords="05:00:56.9 +41:14:02"
+data-name="SAI 40" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_40/">SAI 40</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:00:56.9</td>
+<td>+41:14:02</td>
+<td>164.717</td>
+<td>-0.559</td>
+<td>8.0</td>
+<td>4550 &#194;&#177; 100</td>
+<td>0.35 &#194;&#177; 0.12</td>
+<td>8.75 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="43" data-coords="05:07:39.7 +17:36:00"
+data-name="SAI 42" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_42/">SAI 42</a></td>
+<td class="name">Juchert 23</td>
+<td>05:07:39.7</td>
+<td>+17:36:00</td>
+<td>184.749</td>
+<td>-13.489</td>
+<td>8.0</td>
+<td>2160 &#194;&#177; 90</td>
+<td>0.62 &#194;&#177; 0.18</td>
+<td>8.7 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="53" data-coords="05:28:08.8 +34:25:53"
+data-name="Stock 8" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/stock_8/">Stock 8</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:28:08.8</td>
+<td>+34:25:53</td>
+<td>173.370</td>
+<td>-0.179</td>
+<td>8.0</td>
+<td>900 &#194;&#177; 110</td>
+<td>1.21 &#194;&#177; 0.04</td>
+<td>&lt; 7.5</td>
+</tr>
+<tr name="tr1" data-index="71" data-coords="05:50:17.6 +22:14:59"
+data-name="Berkeley 72" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_72/">Berkeley 72</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:50:17.6</td>
+<td>+22:14:59</td>
+<td>186.272</td>
+<td>-2.551</td>
+<td>8.0</td>
+<td>3500 &#194;&#177; 300</td>
+<td>0.43 &#194;&#177; 0.01</td>
+<td>8.65 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="73" data-coords="05:52:14.6 +29:55:09"
+data-name="Koposov 43" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_43/">Koposov 43</a></td>
+<td class="name">FSR 848</td>
+<td>05:52:14.6</td>
+<td>+29:55:09</td>
+<td>179.900</td>
+<td>1.742</td>
+<td>8.0</td>
+<td>2800 &#194;&#177; 120</td>
+<td>0.38 &#194;&#177; 0.1</td>
+<td>9.3 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="74" data-coords="05:53:30.6 +25:10:41"
+data-name="SAI 56" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_56/">SAI 56</a></td>
+<td class="name">FSR 852</td>
+<td>05:53:30.6</td>
+<td>+25:10:41</td>
+<td>184.126</td>
+<td>-0.426</td>
+<td>8.0</td>
+<td>2310 &#194;&#177; 50</td>
+<td>0.43 &#194;&#177; 0.07</td>
+<td>8.9 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="80" data-coords="06:05:59.2 +13:39:52"
+data-name="SAI 59" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_59/">SAI 59</a></td>
+<td class="name">FSR 942</td>
+<td>06:05:59.2</td>
+<td>+13:39:52</td>
+<td>195.587</td>
+<td>-3.593</td>
+<td>8.0</td>
+<td>2000 &#194;&#177; 240</td>
+<td>0.59 &#194;&#177; 0.01</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="82" data-coords="06:06:55.2 +19:00:26"
+data-name="SAI 61" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_61/">SAI 61</a></td>
+<td class="name">FSR 904</td>
+<td>06:06:55.2</td>
+<td>+19:00:26</td>
+<td>191.024</td>
+<td>-0.797</td>
+<td>8.0</td>
+<td>1260 &#194;&#177; 20</td>
+<td>0.14 &#194;&#177; 0.16</td>
+<td>8.8 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="150" data-coords="09:55:22.6 -56:36:15"
+data-name="SAI 111" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_111/">SAI 111</a></td>
+<td class="name">FSR 1521</td>
+<td>09:55:22.6</td>
+<td>-56:36:15</td>
+<td>280.436</td>
+<td>-1.628</td>
+<td>8.0</td>
+<td>3980 &#194;&#177; 590</td>
+<td>0.9 &#194;&#177; 0.17</td>
+<td>9.45 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="159" data-coords="13:43:03.8 -63:09:53"
+data-name="SAI 118" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_118/">SAI 118</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>13:43:03.8</td>
+<td>-63:09:53</td>
+<td>308.720</td>
+<td>-0.875</td>
+<td>8.0</td>
+<td>1140 &#194;&#177; 370</td>
+<td>0.17 &#194;&#177; 0.21</td>
+<td>9.75 &#194;&#177; 0.25</td>
+</tr>
+<tr name="tr1" data-index="163" data-coords="15:00:03.9 -58:48:13"
+data-name="SAI 122" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_122/">SAI 122</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>15:00:03.9</td>
+<td>-58:48:13</td>
+<td>318.935</td>
+<td>0.013</td>
+<td>8.0</td>
+<td>1670 &#194;&#177; 30</td>
+<td>2.26 &#194;&#177; 0.43</td>
+<td>8.25 &#194;&#177; 0.15</td>
+</tr>
+<tr name="tr1" data-index="171" data-coords="19:47:58.1 +26:01:55"
+data-name="SAI 130" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_130/">SAI 130</a></td>
+<td class="name">FSR 158</td>
+<td>19:47:58.1</td>
+<td>+26:01:55</td>
+<td>62.314</td>
+<td>0.278</td>
+<td>8.0</td>
+<td>3600 &#194;&#177; 190</td>
+<td>1.17 &#194;&#177; 0.04</td>
+<td>&lt; 8.3</td>
+</tr>
+<tr name="tr1" data-index="173" data-coords="19:57:01.5 +31:36:31"
+data-name="SAI 132" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_132/">SAI 132</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>19:57:01.5</td>
+<td>+31:36:31</td>
+<td>68.120</td>
+<td>1.434</td>
+<td>8.0</td>
+<td>2860 &#194;&#177; 80</td>
+<td>0.94 &#194;&#177; 0.09</td>
+<td>8.75 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="187" data-coords="21:50:47.5 +55:16:31"
+data-name="SAI 145" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_145/">SAI 145</a></td>
+<td class="name">FSR 336</td>
+<td>21:50:47.5</td>
+<td>+55:16:31</td>
+<td>99.104</td>
+<td>0.992</td>
+<td>8.0</td>
+<td>2160 &#194;&#177; 400</td>
+<td>0.55 &#194;&#177; 0.09</td>
+<td>8.9 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="188" data-coords="22:07:38.6 +53:06:09"
+data-name="SAI 146" data-radius="7.200">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_146/">SAI 146</a></td>
+<td class="name">FSR 342</td>
+<td>22:07:38.6</td>
+<td>+53:06:09</td>
+<td>99.742</td>
+<td>-2.231</td>
+<td>8.0</td>
+<td>2010 &#194;&#177; 490</td>
+<td>0.27 &#194;&#177; 0.01</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="191" data-coords="22:28:00.5 +52:19:22"
+data-name="NGC 7296" data-radius="7.200" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_7296/">NGC 7296</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:28:00.5</td>
+<td>+52:19:22</td>
+<td>101.882</td>
+<td>-4.588</td>
+<td>8.0</td>
+<td>2450 &#194;&#177; 190</td>
+<td>0.24 &#194;&#177; 0.03</td>
+<td>8.45 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="194" data-coords="22:52:01.0 +58:17:36"
+data-name="King 18" data-radius="7.200" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_18/">King 18</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:52:01.0</td>
+<td>+58:17:36</td>
+<td>107.762</td>
+<td>-1.017</td>
+<td>8.0</td>
+<td>3010 &#194;&#177; 300</td>
+<td>0.69 &#194;&#177; 0.04</td>
+<td>8.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="7" data-coords="00:29:11.3 +68:56:11"
+data-name="SAI 7" data-radius="6.300">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_7/">SAI
+7</a></td>
+<td class="name">FSR 503</td>
+<td>00:29:11.3</td>
+<td>+68:56:11</td>
+<td>120.924</td>
+<td>6.151</td>
+<td>7.0</td>
+<td>2400 &#194;&#177; 450</td>
+<td>0.82 &#194;&#177; 0.12</td>
+<td>9.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="26" data-coords="03:00:26.7 +57:16:02"
+data-name="SAI 25" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_25/">SAI 25</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:00:26.7</td>
+<td>+57:16:02</td>
+<td>139.708</td>
+<td>-1.342</td>
+<td>7.0</td>
+<td>2290 &#194;&#177; 100</td>
+<td>0.84 &#194;&#177; 0.13</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="111" data-coords="07:52:07.2 -28:07:21"
+data-name="SAI 81" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_81/">SAI 81</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>07:52:07.2</td>
+<td>-28:07:21</td>
+<td>244.584</td>
+<td>-0.546</td>
+<td>7.0</td>
+<td>2770 &#194;&#177; 250</td>
+<td>0.4 &#194;&#177; 0.02</td>
+<td>&lt; 8.7</td>
+</tr>
+<tr name="tr1" data-index="126" data-coords="08:27:58.9 -41:46:10"
+data-name="SAI 90" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_90/">SAI 90</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:27:58.9</td>
+<td>-41:46:10</td>
+<td>260.011</td>
+<td>-1.852</td>
+<td>7.0</td>
+<td>2740 &#194;&#177; 140</td>
+<td>1.02 &#194;&#177; 0.21</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="142" data-coords="09:07:38.5 -47:50:01"
+data-name="SAI 103" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_103/">SAI 103</a></td>
+<td class="name">FSR 1460</td>
+<td>09:07:38.5</td>
+<td>-47:50:01</td>
+<td>269.139</td>
+<td>-0.198</td>
+<td>7.0</td>
+<td>1800 &#194;&#177; 700</td>
+<td>1.31 &#194;&#177; 0.2</td>
+<td>9.3 &#194;&#177; 0.7</td>
+</tr>
+<tr name="tr1" data-index="164" data-coords="16:08:17.4 -50:32:06"
+data-name="SAI 123" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_123/">SAI 123</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>16:08:17.4</td>
+<td>-50:32:06</td>
+<td>331.704</td>
+<td>1.003</td>
+<td>7.0</td>
+<td>1860 &#194;&#177; 160</td>
+<td>1.35 &#194;&#177; 0.18</td>
+<td>9.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="189" data-coords="22:15:11.0 +54:20:36"
+data-name="NGC 7245" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_7245/">NGC 7245</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:15:11.0</td>
+<td>+54:20:36</td>
+<td>101.368</td>
+<td>-1.852</td>
+<td>7.0</td>
+<td>3390 &#194;&#177; 210</td>
+<td>0.43 &#194;&#177; 0.03</td>
+<td>8.5 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="190" data-coords="22:20:06.8 +58:07:41"
+data-name="NGC 7261" data-radius="6.300">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_7261/">NGC 7261</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:20:06.8</td>
+<td>+58:07:41</td>
+<td>104.033</td>
+<td>0.921</td>
+<td>7.0</td>
+<td>2830 &#194;&#177; 160</td>
+<td>0.88 &#194;&#177; 0.09</td>
+<td>8.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="196" data-coords="23:08:14.6 +60:30:23"
+data-name="King 19" data-radius="6.300" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_19/">King 19</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>23:08:14.6</td>
+<td>+60:30:23</td>
+<td>110.559</td>
+<td>0.138</td>
+<td>7.0</td>
+<td>2630 &#194;&#177; 310</td>
+<td>0.69 &#194;&#177; 0.08</td>
+<td>8.75 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="199" data-coords="23:38:01.7 +60:32:57"
+data-name="SAI 149" data-radius="6.300" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_149/">SAI 149</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>23:38:01.7</td>
+<td>+60:32:57</td>
+<td>114.025</td>
+<td>-1.047</td>
+<td>7.0</td>
+<td>2370 &#194;&#177; 80</td>
+<td>1.29 &#194;&#177; 0.3</td>
+<td>&lt; 8.2</td>
+</tr>
+<tr name="tr1" data-index="205" data-coords="23:59:07.0 +60:40:40"
+data-name="SAI 153" data-radius="6.300" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_153/">SAI 153</a></td>
+<td class="name">FSR 460</td>
+<td>23:59:07.0</td>
+<td>+60:40:40</td>
+<td>116.566</td>
+<td>-1.546</td>
+<td>7.0</td>
+<td>4900 &#194;&#177; 210</td>
+<td>0.86 &#194;&#177; 0.19</td>
+<td>9.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="3" data-coords="00:14:49.6 +61:28:36"
+data-name="SAI 3" data-radius="5.400">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_3/">SAI
+3</a></td>
+<td class="name">FSR 480</td>
+<td>00:14:49.6</td>
+<td>+61:28:36</td>
+<td>118.575</td>
+<td>-1.085</td>
+<td>6.0</td>
+<td>6900 &#194;&#177; 160</td>
+<td>0.68 &#194;&#177; 0.02</td>
+<td>9.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="20" data-coords="02:26:31.9 +61:59:33"
+data-name="SAI 19" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_19/">SAI 19</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:26:31.9</td>
+<td>+61:59:33</td>
+<td>133.846</td>
+<td>1.153</td>
+<td>6.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="21" data-coords="02:27:04.8 +61:37:40"
+data-name="SAI 20" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_20/">SAI 20</a></td>
+<td class="name">FSR 584</td>
+<td>02:27:04.8</td>
+<td>+61:37:40</td>
+<td>134.038</td>
+<td>0.836</td>
+<td>6.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="25" data-coords="02:59:25.4 +60:33:58"
+data-name="SAI 24" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_24/">SAI 24</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:59:25.4</td>
+<td>+60:33:58</td>
+<td>138.030</td>
+<td>1.502</td>
+<td>6.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="32" data-coords="03:51:15.4 +58:46:08"
+data-name="SAI 31" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_31/">SAI 31</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:51:15.4</td>
+<td>+58:46:08</td>
+<td>144.467</td>
+<td>3.632</td>
+<td>6.0</td>
+<td>2650 &#194;&#177; 30</td>
+<td>0.16 &#194;&#177; 0.22</td>
+<td>9.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="46" data-coords="05:16:35.0 +45:34:56"
+data-name="SAI 45" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_45/">SAI 45</a></td>
+<td class="name">Patchick 3</td>
+<td>05:16:35.0</td>
+<td>+45:34:56</td>
+<td>162.919</td>
+<td>4.312</td>
+<td>6.0</td>
+<td>1290 &#194;&#177; 100</td>
+<td>0.25 &#194;&#177; 0.02</td>
+<td>9.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="51" data-coords="05:26:24.9 +50:47:03"
+data-name="SAI 49" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_49/">SAI 49</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:26:24.9</td>
+<td>+50:47:03</td>
+<td>159.510</td>
+<td>8.586</td>
+<td>6.0</td>
+<td>2720 &#194;&#177; 220</td>
+<td>0.47 &#194;&#177; 0.01</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="52" data-coords="05:26:41.0 +36:00:49"
+data-name="Czernik 21" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/czernik_21/">Czernik 21</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:26:41.0</td>
+<td>+36:00:49</td>
+<td>171.889</td>
+<td>0.453</td>
+<td>6.0</td>
+<td>2300 &#194;&#177; 200</td>
+<td>0.72 &#194;&#177; 0.02</td>
+<td>9.55 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="57" data-coords="05:31:25.9 +34:12:50"
+data-name="NGC 1931" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_1931/">NGC 1931</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:31:25.9</td>
+<td>+34:12:50</td>
+<td>173.925</td>
+<td>0.267</td>
+<td>6.0</td>
+<td>1000 &#194;&#177; 120</td>
+<td>1.97 &#194;&#177; 0.2</td>
+<td>&lt; 7.0</td>
+</tr>
+<tr name="tr1" data-index="61" data-coords="05:40:44.1 +35:55:25"
+data-name="Koposov 7" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_7/">Koposov 7</a></td>
+<td class="name">FSR 784</td>
+<td>05:40:44.1</td>
+<td>+35:55:25</td>
+<td>173.510</td>
+<td>2.791</td>
+<td>6.0</td>
+<td>4760 &#194;&#177; 830</td>
+<td>3.75 &#194;&#177; 0.37</td>
+<td>8.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="67" data-coords="05:44:22.2 +28:49:13"
+data-name="Koposov 49" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_49/">Koposov 49</a></td>
+<td class="name">Teutsch 10</td>
+<td>05:44:22.2</td>
+<td>+28:49:13</td>
+<td>179.956</td>
+<td>-0.294</td>
+<td>6.0</td>
+<td>2000 &#194;&#177; 200</td>
+<td>0.42 &#194;&#177; 0.05</td>
+<td>&lt; 9.15</td>
+</tr>
+<tr name="tr1" data-index="76" data-coords="05:55:24.6 +20:53:11"
+data-name="Czernik 24" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/czernik_24/">Czernik 24</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:55:24.6</td>
+<td>+20:53:11</td>
+<td>188.052</td>
+<td>-2.217</td>
+<td>6.0</td>
+<td>4600 &#194;&#177; 10</td>
+<td>0.26 &#194;&#177; 0.12</td>
+<td>9.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="91" data-coords="06:18:02.0 +24:42:38"
+data-name="Koposov 62" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_62/">Koposov 62</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:18:02.0</td>
+<td>+24:42:38</td>
+<td>187.250</td>
+<td>4.197</td>
+<td>6.0</td>
+<td>2800 &#194;&#177; 60</td>
+<td>0.34 &#194;&#177; 0.02</td>
+<td>9.4 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="96" data-coords="06:43:49.0 -00:52:60"
+data-name="SAI 67" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_67/">SAI 67</a></td>
+<td class="name">Teutsch59</td>
+<td>06:43:49.0</td>
+<td>-00:52:60</td>
+<td>212.849</td>
+<td>-2.098</td>
+<td>6.0</td>
+<td>2940 &#194;&#177; 50</td>
+<td>0.57 &#194;&#177; 0.14</td>
+<td>&lt; 8.9</td>
+</tr>
+<tr name="tr1" data-index="105" data-coords="07:26:17.4 -18:25:55"
+data-name="SAI 76" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_76/">SAI 76</a></td>
+<td class="name">FSR 1253</td>
+<td>07:26:17.4</td>
+<td>-18:25:55</td>
+<td>233.234</td>
+<td>-0.932</td>
+<td>6.0</td>
+<td>2640 &#194;&#177; 310</td>
+<td>0.62 &#194;&#177; 0.01</td>
+<td>8.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="108" data-coords="07:44:22.2 -34:37:07"
+data-name="ESO 368-11" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/eso_368-11/">ESO 368-11</a></td>
+<td class="name">FSR 1353</td>
+<td>07:44:22.2</td>
+<td>-34:37:07</td>
+<td>249.373</td>
+<td>-5.244</td>
+<td>6.0</td>
+<td>1490 &#194;&#177; 310</td>
+<td>0.06 &#194;&#177; 0.1</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="109" data-coords="07:48:03.4 -33:42:35"
+data-name="SAI 79" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_79/">SAI 79</a></td>
+<td class="name">FSR 1347</td>
+<td>07:48:03.4</td>
+<td>-33:42:35</td>
+<td>248.962</td>
+<td>-4.130</td>
+<td>6.0</td>
+<td>2450 &#194;&#177; 80</td>
+<td>1.09 &#194;&#177; 0.15</td>
+<td>&lt; 8.7</td>
+</tr>
+<tr name="tr1" data-index="115" data-coords="08:01:11.5 -40:40:41"
+data-name="SAI 85" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_85/">SAI 85</a></td>
+<td class="name">FSR 1378</td>
+<td>08:01:11.5</td>
+<td>-40:40:41</td>
+<td>256.312</td>
+<td>-5.448</td>
+<td>6.0</td>
+<td>2230 &#194;&#177; 140</td>
+<td>1.21 &#194;&#177; 0.25</td>
+<td>8.8 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="118" data-coords="08:08:15.0 -36:36:33"
+data-name="SAI 86" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_86/">SAI 86</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:08:15.0</td>
+<td>-36:36:33</td>
+<td>253.593</td>
+<td>-2.117</td>
+<td>6.0</td>
+<td>3030 &#194;&#177; 230</td>
+<td>0.69 &#194;&#177; 0.09</td>
+<td>8.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="124" data-coords="08:24:26.1 -41:17:52"
+data-name="ESO 312-03" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/eso_312-03/">ESO 312-03</a></td>
+<td class="name">FSR 1394</td>
+<td>08:24:26.1</td>
+<td>-41:17:52</td>
+<td>259.242</td>
+<td>-2.121</td>
+<td>6.0</td>
+<td>2170 &#194;&#177; 650</td>
+<td>0.52 &#194;&#177; 0.1</td>
+<td>&lt; 8.9</td>
+</tr>
+<tr name="tr1" data-index="127" data-coords="08:32:41.4 -48:18:21"
+data-name="Ruprecht 63" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ruprecht_63/">Ruprecht 63</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:32:41.4</td>
+<td>-48:18:21</td>
+<td>265.804</td>
+<td>-5.013</td>
+<td>6.0</td>
+<td>2670 &#194;&#177; 100</td>
+<td>0.54 &#194;&#177; 0.04</td>
+<td>&lt; 8.5</td>
+</tr>
+<tr name="tr1" data-index="137" data-coords="08:57:03.0 -43:45:40"
+data-name="SAI 98" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_98/">SAI 98</a></td>
+<td class="name">FSR 1435</td>
+<td>08:57:03.0</td>
+<td>-43:45:40</td>
+<td>264.867</td>
+<td>1.119</td>
+<td>6.0</td>
+<td>1130 &#194;&#177; 170</td>
+<td>1.06 &#194;&#177; 0.06</td>
+<td>9.75 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="147" data-coords="09:38:52.9 -52:57:28"
+data-name="SAI 108" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_108/">SAI 108</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>09:38:52.9</td>
+<td>-52:57:28</td>
+<td>276.274</td>
+<td>-0.355</td>
+<td>6.0</td>
+<td>2910 &#194;&#177; 110</td>
+<td>0.66 &#194;&#177; 0.02</td>
+<td>8.5 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="169" data-coords="19:29:46.9 +15:33:51"
+data-name="SAI 128" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_128/">SAI 128</a></td>
+<td class="name">FSR 133</td>
+<td>19:29:46.9</td>
+<td>+15:33:51</td>
+<td>51.113</td>
+<td>-1.170</td>
+<td>6.0</td>
+<td>2080 &#194;&#177; 120</td>
+<td>2.26 &#194;&#177; 0.45</td>
+<td>8.35 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="177" data-coords="20:04:35.7 +35:13:03"
+data-name="SAI 136" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_136/">SAI 136</a></td>
+<td class="name">Kronberger 36</td>
+<td>20:04:35.7</td>
+<td>+35:13:03</td>
+<td>72.021</td>
+<td>1.994</td>
+<td>6.0</td>
+<td>1900 &#194;&#177; 240</td>
+<td>0.76 &#194;&#177; 0.18</td>
+<td>&lt; 8.4</td>
+</tr>
+<tr name="tr1" data-index="178" data-coords="20:49:52.6 +41:15:18"
+data-name="SAI 137" data-radius="5.400">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_137/">SAI 137</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>20:49:52.6</td>
+<td>+41:15:18</td>
+<td>82.096</td>
+<td>-1.713</td>
+<td>6.0</td>
+<td>1060 &#194;&#177; 120</td>
+<td>0.89 &#194;&#177; 0.08</td>
+<td>&lt; 8.7</td>
+</tr>
+<tr name="tr1" data-index="2" data-coords="00:12:28.4 +76:14:06"
+data-name="SAI 2" data-radius="4.500">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_2/">SAI
+2</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:12:28.4</td>
+<td>+76:14:06</td>
+<td>120.559</td>
+<td>13.543</td>
+<td>5.0</td>
+<td>3090 &#194;&#177; 400</td>
+<td>0.81 &#194;&#177; 0.27</td>
+<td>&lt; 7.7</td>
+</tr>
+<tr name="tr1" data-index="6" data-coords="00:27:52.6 +60:41:21"
+data-name="SAI 6" data-radius="4.500">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_6/">SAI
+6</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:27:52.6</td>
+<td>+60:41:21</td>
+<td>120.050</td>
+<td>-2.051</td>
+<td>5.0</td>
+<td>2700 &#194;&#177; 50</td>
+<td>0.89 &#194;&#177; 0.09</td>
+<td>&lt; 8.5</td>
+</tr>
+<tr name="tr1" data-index="17" data-coords="02:05:29.6 +62:15:54"
+data-name="SAI 16" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_16/">SAI 16</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:05:29.6</td>
+<td>+62:15:54</td>
+<td>131.430</td>
+<td>0.621</td>
+<td>5.0</td>
+<td>7700 &#194;&#177; 740</td>
+<td>0.7 &#194;&#177; 0.01</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="23" data-coords="02:48:58.1 +60:44:34"
+data-name="SAI 22" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_22/">SAI 22</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:48:58.1</td>
+<td>+60:44:34</td>
+<td>136.809</td>
+<td>1.077</td>
+<td>5.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="28" data-coords="03:11:21.9 +68:54:01"
+data-name="SAI 27" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_27/">SAI 27</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:11:21.9</td>
+<td>+68:54:01</td>
+<td>135.006</td>
+<td>9.376</td>
+<td>5.0</td>
+<td>1250 &#194;&#177; 170</td>
+<td>0.62 &#194;&#177; 0.04</td>
+<td>9.25 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="30" data-coords="03:40:21.5 +59:24:52"
+data-name="SAI 29" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_29/">SAI 29</a></td>
+<td class="name">FSR 634</td>
+<td>03:40:21.5</td>
+<td>+59:24:52</td>
+<td>142.964</td>
+<td>3.281</td>
+<td>5.0</td>
+<td>2800 &#194;&#177; 90</td>
+<td>0.84 &#194;&#177; 0.01</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="35" data-coords="04:02:37.8 +51:55:50"
+data-name="SAI 34" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_34/">SAI 34</a></td>
+<td class="name">FSR 660</td>
+<td>04:02:37.8</td>
+<td>+51:55:50</td>
+<td>150.113</td>
+<td>-0.554</td>
+<td>5.0</td>
+<td>5700 &#194;&#177; 80</td>
+<td>1.2 &#194;&#177; 0.12</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="36" data-coords="04:10:47.0 +46:52:01"
+data-name="SAI 35" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_35/">SAI 35</a></td>
+<td class="name">Juchert 20</td>
+<td>04:10:47.0</td>
+<td>+46:52:01</td>
+<td>154.494</td>
+<td>-3.422</td>
+<td>5.0</td>
+<td>2420 &#194;&#177; 20</td>
+<td>0.7 &#194;&#177; 0.18</td>
+<td>&lt; 8.55</td>
+</tr>
+<tr name="tr1" data-index="45" data-coords="05:11:07.4 +45:43:09"
+data-name="SAI 44" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_44/">SAI 44</a></td>
+<td class="name">FSR 716</td>
+<td>05:11:07.4</td>
+<td>+45:43:09</td>
+<td>162.250</td>
+<td>3.616</td>
+<td>5.0</td>
+<td>3400 &#194;&#177; 70</td>
+<td>0.24 &#194;&#177; 0.01</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="49" data-coords="05:24:02.8 +29:34:16"
+data-name="Berkeley 19" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_19/">Berkeley 19</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:24:02.8</td>
+<td>+29:34:16</td>
+<td>176.919</td>
+<td>-3.614</td>
+<td>5.0</td>
+<td>3000 &#194;&#177; 600</td>
+<td>0.61 &#194;&#177; 0.05</td>
+<td>9.25 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="54" data-coords="05:28:22.0 +34:46:24"
+data-name="Kronberger 1" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/kronberger_1/">Kronberger 1</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:28:22.0</td>
+<td>+34:46:24</td>
+<td>173.110</td>
+<td>0.048</td>
+<td>5.0</td>
+<td>800 &#194;&#177; 100</td>
+<td>0.43 &#194;&#177; 0.1</td>
+<td>8.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="66" data-coords="05:43:52.3 +21:42:37"
+data-name="Koposov 77" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_77/">Koposov 77</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:43:52.3</td>
+<td>+21:42:37</td>
+<td>185.965</td>
+<td>-4.105</td>
+<td>5.0</td>
+<td>1750 &#194;&#177; 50</td>
+<td>0.57 &#194;&#177; 0.01</td>
+<td>9.65 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="70" data-coords="05:50:03.6 +28:53:41"
+data-name="Czernik 23" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/czernik_23/">Czernik 23</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:50:03.6</td>
+<td>+28:53:41</td>
+<td>180.538</td>
+<td>0.810</td>
+<td>5.0</td>
+<td>2500 &#194;&#177; 70</td>
+<td>0.38 &#194;&#177; 0.02</td>
+<td>8.45 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="75" data-coords="05:53:48.9 +26:50:26"
+data-name="Koposov 52" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_52/">Koposov 52</a></td>
+<td class="name">Teutsch 5</td>
+<td>05:53:48.9</td>
+<td>+26:50:26</td>
+<td>182.728</td>
+<td>0.477</td>
+<td>5.0</td>
+<td>2900 &#194;&#177; 140</td>
+<td>1.03 &#194;&#177; 0.04</td>
+<td>8.95 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="78" data-coords="06:04:21.5 +14:34:22"
+data-name="SAI 57" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_57/">SAI 57</a></td>
+<td class="name">FSR 932</td>
+<td>06:04:21.5</td>
+<td>+14:34:22</td>
+<td>194.599</td>
+<td>-3.496</td>
+<td>5.0</td>
+<td>1090 &#194;&#177; 50</td>
+<td>0.39 &#194;&#177; 0.07</td>
+<td>8.9 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="79" data-coords="06:05:09.4 +16:41:03"
+data-name="SAI 58" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_58/">SAI 58</a></td>
+<td class="name">FSR 921</td>
+<td>06:05:09.4</td>
+<td>+16:41:03</td>
+<td>192.848</td>
+<td>-2.297</td>
+<td>5.0</td>
+<td>2290 &#194;&#177; 220</td>
+<td>1.33 &#194;&#177; 0.33</td>
+<td>8.5 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="86" data-coords="06:10:01.7 +24:33:38"
+data-name="Koposov 63" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_63/">Koposov 63</a></td>
+<td class="name">FSR 869</td>
+<td>06:10:01.7</td>
+<td>+24:33:38</td>
+<td>186.516</td>
+<td>2.526</td>
+<td>5.0</td>
+<td>3000 &#194;&#177; 350</td>
+<td>0.26 &#194;&#177; 0.04</td>
+<td>9.15 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="95" data-coords="06:34:37.9 -00:16:01"
+data-name="SAI 66" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_66/">SAI 66</a></td>
+<td class="name">FSR 1063</td>
+<td>06:34:37.9</td>
+<td>-00:16:01</td>
+<td>211.251</td>
+<td>-3.861</td>
+<td>5.0</td>
+<td>1970 &#194;&#177; 130</td>
+<td>0.58 &#194;&#177; 0.01</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="101" data-coords="06:55:48.4 +00:13:37"
+data-name="SAI 72" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_72/">SAI 72</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:55:48.4</td>
+<td>+00:13:37</td>
+<td>213.228</td>
+<td>1.075</td>
+<td>5.0</td>
+<td>3150 &#194;&#177; 70</td>
+<td>0.82 &#194;&#177; 0.06</td>
+<td>8.5 &#194;&#177; 0.2</td>
+</tr>
+<tr name="tr1" data-index="110" data-coords="07:48:26.7 -27:54:51"
+data-name="SAI 80" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_80/">SAI 80</a></td>
+<td class="name">Teutsch 25</td>
+<td>07:48:26.7</td>
+<td>-27:54:51</td>
+<td>243.992</td>
+<td>-1.138</td>
+<td>5.0</td>
+<td>1980 &#194;&#177; 150</td>
+<td>0.57 &#194;&#177; 0.12</td>
+<td>&lt; 9.0</td>
+</tr>
+<tr name="tr1" data-index="116" data-coords="08:01:41.6 -41:35:57"
+data-name="ESO 311-21" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/eso_311-21/">ESO 311-21</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:01:41.6</td>
+<td>-41:35:57</td>
+<td>257.151</td>
+<td>-5.848</td>
+<td>5.0</td>
+<td>2330 &#194;&#177; 90</td>
+<td>0.49 &#194;&#177; 0.02</td>
+<td>10.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="129" data-coords="08:39:34.5 -46:17:54"
+data-name="SAI 92" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_92/">SAI 92</a></td>
+<td class="name">FSR 1436</td>
+<td>08:39:34.5</td>
+<td>-46:17:54</td>
+<td>264.894</td>
+<td>-2.876</td>
+<td>5.0</td>
+<td>1580 &#194;&#177; 130</td>
+<td>0.39 &#194;&#177; 0.1</td>
+<td>8.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="132" data-coords="08:44:39.8 -46:17:46"
+data-name="SAI 94" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_94/">SAI 94</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:44:39.8</td>
+<td>-46:17:46</td>
+<td>265.432</td>
+<td>-2.181</td>
+<td>5.0</td>
+<td>3910 &#194;&#177; 560</td>
+<td>0.48 &#194;&#177; 0.05</td>
+<td>9.1 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="133" data-coords="08:51:00.6 -48:27:37"
+data-name="SAI 95" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_95/">SAI 95</a></td>
+<td class="name">FSR 1454</td>
+<td>08:51:00.6</td>
+<td>-48:27:37</td>
+<td>267.793</td>
+<td>-2.703</td>
+<td>5.0</td>
+<td>6200 &#194;&#177; 140</td>
+<td>0.57 &#194;&#177; 0.03</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="134" data-coords="08:51:34.3 -50:14:43"
+data-name="ESO 211-03" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/eso_211-03/">ESO 211-03</a></td>
+<td class="name">FSR 1463</td>
+<td>08:51:34.3</td>
+<td>-50:14:43</td>
+<td>269.232</td>
+<td>-3.767</td>
+<td>5.0</td>
+<td>3770 &#194;&#177; 70</td>
+<td>0.9 &#194;&#177; 0.07</td>
+<td>9.05 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="138" data-coords="08:58:04.4 -43:24:38"
+data-name="SAI 99" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_99/">SAI 99</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:58:04.4</td>
+<td>-43:24:38</td>
+<td>264.721</td>
+<td>1.488</td>
+<td>5.0</td>
+<td>3310 &#194;&#177; 60</td>
+<td>1.84 &#194;&#177; 0.49</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="140" data-coords="08:58:22.4 -43:07:35"
+data-name="SAI 101" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_101/">SAI 101</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:58:22.4</td>
+<td>-43:07:35</td>
+<td>264.542</td>
+<td>1.715</td>
+<td>5.0</td>
+<td>1650 &#194;&#177; 40</td>
+<td>1.56 &#194;&#177; 0.04</td>
+<td>&lt; 9.0</td>
+</tr>
+<tr name="tr1" data-index="145" data-coords="09:17:59.4 -51:01:46"
+data-name="SAI 106" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_106/">SAI 106</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>09:17:59.4</td>
+<td>-51:01:46</td>
+<td>272.616</td>
+<td>-1.174</td>
+<td>5.0</td>
+<td>5152 &#194;&#177; 240</td>
+<td>1.02 &#194;&#177; 0.02</td>
+<td>9.35 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="148" data-coords="09:43:34.4 -50:47:33"
+data-name="SAI 109" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_109/">SAI 109</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>09:43:34.4</td>
+<td>-50:47:33</td>
+<td>275.398</td>
+<td>1.754</td>
+<td>5.0</td>
+<td>7690 &#194;&#177; 2000</td>
+<td>0.23 &#194;&#177; 0.04</td>
+<td>9.2 &#194;&#177; 0.2</td>
+</tr>
+<tr name="tr1" data-index="155" data-coords="11:22:44.9 -62:19:06"
+data-name="SAI 115" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_115/">SAI 115</a></td>
+<td class="name">FSR 1586</td>
+<td>11:22:44.9</td>
+<td>-62:19:06</td>
+<td>292.832</td>
+<td>-1.198</td>
+<td>5.0</td>
+<td>2420 &#194;&#177; 230</td>
+<td>1.6 &#194;&#177; 0.29</td>
+<td>8.65 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="156" data-coords="11:49:18.0 -62:13:47"
+data-name="SAI 116" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_116/">SAI 116</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>11:49:18.0</td>
+<td>-62:13:47</td>
+<td>295.764</td>
+<td>-0.226</td>
+<td>5.0</td>
+<td>2200 &#194;&#177; 180</td>
+<td>0.98 &#194;&#177; 0.08</td>
+<td>8.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="157" data-coords="12:26:13.7 -63:24:50"
+data-name="BH 131" data-radius="4.500">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/bh_131/">BH
+131</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>12:26:13.7</td>
+<td>-63:24:50</td>
+<td>300.116</td>
+<td>-0.680</td>
+<td>5.0</td>
+<td>6250 &#194;&#177; 670</td>
+<td>0.62 &#194;&#177; 0.04</td>
+<td>9.1 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="162" data-coords="14:40:06.8 -60:23:13"
+data-name="SAI 121" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_121/">SAI 121</a></td>
+<td class="name">FSR 1686</td>
+<td>14:40:06.8</td>
+<td>-60:23:13</td>
+<td>315.972</td>
+<td>-0.296</td>
+<td>5.0</td>
+<td>4020 &#194;&#177; 300</td>
+<td>1.48 &#194;&#177; 0.23</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="166" data-coords="18:06:27.8 -21:23:27"
+data-name="SAI 125" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_125/">SAI 125</a></td>
+<td class="name">FSR 31</td>
+<td>18:06:27.8</td>
+<td>-21:23:27</td>
+<td>8.891</td>
+<td>-0.271</td>
+<td>5.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="176" data-coords="20:02:55.9 +24:33:17"
+data-name="SAI 135" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_135/">SAI 135</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>20:02:55.9</td>
+<td>+24:33:17</td>
+<td>62.800</td>
+<td>-3.380</td>
+<td>5.0</td>
+<td>3780 &#194;&#177; 110</td>
+<td>1.34 &#194;&#177; 0.29</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="195" data-coords="22:55:04.8 +58:42:53"
+data-name="SAI 147" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_147/">SAI 147</a></td>
+<td class="name">FSR 394</td>
+<td>22:55:04.8</td>
+<td>+58:42:53</td>
+<td>108.307</td>
+<td>-0.813</td>
+<td>5.0</td>
+<td>5570 &#194;&#177; 570</td>
+<td>0.7 &#194;&#177; 0.04</td>
+<td>9.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="197" data-coords="23:15:29.5 +64:09:58"
+data-name="SAI 148" data-radius="4.500">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_148/">SAI 148</a></td>
+<td class="name">FSR 430</td>
+<td>23:15:29.5</td>
+<td>+64:09:58</td>
+<td>112.712</td>
+<td>3.215</td>
+<td>5.0</td>
+<td>2430 &#194;&#177; 60</td>
+<td>1.08 &#194;&#177; 0.2</td>
+<td>8.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="200" data-coords="23:41:58.8 +58:32:29"
+data-name="SAI 150" data-radius="4.500" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_150/">SAI 150</a></td>
+<td class="name">FSR 441</td>
+<td>23:41:58.8</td>
+<td>+58:32:29</td>
+<td>113.958</td>
+<td>-3.115</td>
+<td>5.0</td>
+<td>2330 &#194;&#177; 40</td>
+<td>0.78 &#194;&#177; 0.14</td>
+<td>8.55 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="201" data-coords="23:50:54.5 +66:10:49"
+data-name="SAI 151" data-radius="4.500" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_151/">SAI 151</a></td>
+<td class="name">FSR 465</td>
+<td>23:50:54.5</td>
+<td>+66:10:49</td>
+<td>116.865</td>
+<td>4.024</td>
+<td>5.0</td>
+<td>5250 &#194;&#177; 250</td>
+<td>0.78 &#194;&#177; 0.04</td>
+<td>9.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="202" data-coords="23:53:00.8 +61:56:45"
+data-name="King 12" data-radius="4.500" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_12/">King 12</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>23:53:00.8</td>
+<td>+61:56:45</td>
+<td>116.121</td>
+<td>-0.151</td>
+<td>5.0</td>
+<td>2490 &#194;&#177; 180</td>
+<td>0.51 &#194;&#177; 0.05</td>
+<td>7.85 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="0" data-coords="00:08:20.4 +51:43:15"
+data-name="SAI 1" data-radius="3.600">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_1/">SAI
+1</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:08:20.4</td>
+<td>+51:43:15</td>
+<td>116.166</td>
+<td>-10.584</td>
+<td>4.0</td>
+<td>2170 &#194;&#177; 60</td>
+<td>0.34 &#194;&#177; 0.14</td>
+<td>9.1 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="4" data-coords="00:23:40.0 +62:42:14"
+data-name="SAI 4" data-radius="3.600">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_4/">SAI
+4</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:23:40.0</td>
+<td>+62:42:14</td>
+<td>119.754</td>
+<td>0.004</td>
+<td>4.0</td>
+<td>1600 &#194;&#177; 290</td>
+<td>0.27 &#194;&#177; 0.18</td>
+<td>&lt; 8.7</td>
+</tr>
+<tr name="tr1" data-index="5" data-coords="00:25:37.8 +63:45:40"
+data-name="SAI 5" data-radius="3.600">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_5/">SAI
+5</a></td>
+<td class="name">FSR 494</td>
+<td>00:25:37.8</td>
+<td>+63:45:40</td>
+<td>120.084</td>
+<td>1.032</td>
+<td>4.0</td>
+<td>3500 &#194;&#177; 120</td>
+<td>0.6 &#194;&#177; 0.08</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="8" data-coords="00:31:32.6 +61:30:30"
+data-name="NGC 136" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_136/">NGC 136</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:31:32.6</td>
+<td>+61:30:30</td>
+<td>120.561</td>
+<td>-1.272</td>
+<td>4.0</td>
+<td>5220 &#194;&#177; 350</td>
+<td>0.7 &#194;&#177; 0.09</td>
+<td>8.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="10" data-coords="00:41:51.9 +64:58:51"
+data-name="SAI 9" data-radius="3.600">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_9/">SAI
+9</a></td>
+<td class="name">FSR 508</td>
+<td>00:41:51.9</td>
+<td>+64:58:51</td>
+<td>121.919</td>
+<td>2.128</td>
+<td>4.0</td>
+<td>7700 &#194;&#177; 700</td>
+<td>0.66 &#194;&#177; 0.17</td>
+<td>9.1 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="13" data-coords="01:04:24.1 +45:36:25"
+data-name="SAI 12" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_12/">SAI 12</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>01:04:24.1</td>
+<td>+45:36:25</td>
+<td>125.305</td>
+<td>-17.205</td>
+<td>4.0</td>
+<td>2600 &#194;&#177; 50</td>
+<td>1.13 &#194;&#177; 0.3</td>
+<td>&lt; 8.15</td>
+</tr>
+<tr name="tr1" data-index="15" data-coords="01:26:00.3 +62:37:33"
+data-name="SAI 14" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_14/">SAI 14</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>01:26:00.3</td>
+<td>+62:37:33</td>
+<td>126.894</td>
+<td>0.020</td>
+<td>4.0</td>
+<td>6460 &#194;&#177; 90</td>
+<td>0.55 &#194;&#177; 0.03</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="38" data-coords="04:39:27.1 +48:12:23"
+data-name="SAI 37" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_37/">SAI 37</a></td>
+<td class="name">FSR 687</td>
+<td>04:39:27.1</td>
+<td>+48:12:23</td>
+<td>156.921</td>
+<td>0.971</td>
+<td>4.0</td>
+<td>7200 &#194;&#177; 130</td>
+<td>0.77 &#194;&#177; 0.03</td>
+<td>9.15 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="50" data-coords="05:24:16.8 +33:30:02"
+data-name="SAI 48" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_48/">SAI 48</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:24:16.8</td>
+<td>+33:30:02</td>
+<td>173.694</td>
+<td>-1.364</td>
+<td>4.0</td>
+<td>1800 &#194;&#177; 180</td>
+<td>0.31 &#194;&#177; 0.07</td>
+<td>9.35 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="68" data-coords="05:47:28.6 +35:25:56"
+data-name="Koposov 10" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_10/">Koposov 10</a></td>
+<td class="name">FSR 795</td>
+<td>05:47:28.6</td>
+<td>+35:25:56</td>
+<td>174.645</td>
+<td>3.703</td>
+<td>4.0</td>
+<td>2000 &#194;&#177; 300</td>
+<td>0.81 &#194;&#177; 0.25</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="69" data-coords="05:49:19.0 +33:37:38"
+data-name="King 8" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/king_8/">King 8</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:49:19.0</td>
+<td>+33:37:38</td>
+<td>176.391</td>
+<td>3.101</td>
+<td>4.0</td>
+<td>3100 &#194;&#177; 200</td>
+<td>0.44 &#194;&#177; 0.04</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="81" data-coords="06:06:38.6 +15:56:51"
+data-name="SAI 60" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_60/">SAI 60</a></td>
+<td class="name">Teutsch 58</td>
+<td>06:06:38.6</td>
+<td>+15:56:51</td>
+<td>193.666</td>
+<td>-2.345</td>
+<td>4.0</td>
+<td>7940 &#194;&#177; 190</td>
+<td>0.9 &#194;&#177; 0.01</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="87" data-coords="06:10:53.8 +20:36:26"
+data-name="Pismis 27" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/pismis_27/">Pismis 27</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:10:53.8</td>
+<td>+20:36:26</td>
+<td>190.078</td>
+<td>0.796</td>
+<td>4.0</td>
+<td>1000 &#194;&#177; 10</td>
+<td>0.68 &#194;&#177; 0.06</td>
+<td>&lt; 7.7</td>
+</tr>
+<tr name="tr1" data-index="89" data-coords="06:11:55.8 +20:40:14"
+data-name="Koposov 82" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_82/">Koposov 82</a></td>
+<td class="name">Teutsch 136</td>
+<td>06:11:55.8</td>
+<td>+20:40:14</td>
+<td>190.139</td>
+<td>1.039</td>
+<td>4.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="90" data-coords="06:13:44.5 +06:56:58"
+data-name="SAI 63" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_63/">SAI 63</a></td>
+<td class="name">FSR 987</td>
+<td>06:13:44.5</td>
+<td>+06:56:58</td>
+<td>202.415</td>
+<td>-5.134</td>
+<td>4.0</td>
+<td>1910 &#194;&#177; 80</td>
+<td>0.37 &#194;&#177; 0.13</td>
+<td>8.65 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="92" data-coords="06:25:55.9 +15:51:39"
+data-name="SAI 64" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_64/">SAI 64</a></td>
+<td class="name">FSR 948</td>
+<td>06:25:55.9</td>
+<td>+15:51:39</td>
+<td>195.950</td>
+<td>1.693</td>
+<td>4.0</td>
+<td>2330 &#194;&#177; 190</td>
+<td>0.08 &#194;&#177; 0.13</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="93" data-coords="06:30:58.0 +30:15:41"
+data-name="Koposov 41" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_41/">Koposov 41</a></td>
+<td class="name">FSR 839</td>
+<td>06:30:58.0</td>
+<td>+30:15:41</td>
+<td>183.588</td>
+<td>9.278</td>
+<td>4.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="99" data-coords="06:50:26.6 -05:26:08"
+data-name="SAI 70" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_70/">SAI 70</a></td>
+<td class="name">FSR 1125</td>
+<td>06:50:26.6</td>
+<td>-05:26:08</td>
+<td>217.660</td>
+<td>-2.696</td>
+<td>4.0</td>
+<td>6280 &#194;&#177; 270</td>
+<td>0.39 &#194;&#177; 0.01</td>
+<td>&lt; 9.1</td>
+</tr>
+<tr name="tr1" data-index="100" data-coords="06:53:11.2 -00:11:31"
+data-name="SAI 71" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_71/">SAI 71</a></td>
+<td class="name">FSR 1085</td>
+<td>06:53:11.2</td>
+<td>-00:11:31</td>
+<td>213.302</td>
+<td>0.302</td>
+<td>4.0</td>
+<td>1330 &#194;&#177; 120</td>
+<td>0.08 &#194;&#177; 0.09</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="104" data-coords="07:15:22.5 -07:25:20"
+data-name="SAI 75" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_75/">SAI 75</a></td>
+<td class="name">Patchick 79</td>
+<td>07:15:22.5</td>
+<td>-07:25:20</td>
+<td>222.266</td>
+<td>1.897</td>
+<td>4.0</td>
+<td>2800 &#194;&#177; 330</td>
+<td>0.23 &#194;&#177; 0.03</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="106" data-coords="07:28:06.2 -21:47:46"
+data-name="SAI 77" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_77/">SAI 77</a></td>
+<td class="name">FSR 1275</td>
+<td>07:28:06.2</td>
+<td>-21:47:46</td>
+<td>236.397</td>
+<td>-2.159</td>
+<td>4.0</td>
+<td>3750 &#194;&#177; 210</td>
+<td>0.6 &#194;&#177; 0.1</td>
+<td>9.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="119" data-coords="08:11:05.0 -39:59:51"
+data-name="SAI 87" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_87/">SAI 87</a></td>
+<td class="name">FSR 1380</td>
+<td>08:11:05.0</td>
+<td>-39:59:51</td>
+<td>256.744</td>
+<td>-3.491</td>
+<td>4.0</td>
+<td>2290 &#194;&#177; 210</td>
+<td>1.28 &#194;&#177; 0.3</td>
+<td>&lt; 8.65</td>
+</tr>
+<tr name="tr1" data-index="122" data-coords="08:24:23.0 -47:12:37"
+data-name="Ruprecht 60" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ruprecht_60/">Ruprecht 60</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:24:23.0</td>
+<td>-47:12:37</td>
+<td>264.095</td>
+<td>-5.515</td>
+<td>4.0</td>
+<td>3700 &#194;&#177; 190</td>
+<td>0.57 &#194;&#177; 0.06</td>
+<td>&lt; 8.65</td>
+</tr>
+<tr name="tr1" data-index="128" data-coords="08:37:03.4 -50:03:52"
+data-name="SAI 91" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_91/">SAI 91</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:37:03.4</td>
+<td>-50:03:52</td>
+<td>267.650</td>
+<td>-5.484</td>
+<td>4.0</td>
+<td>3090 &#194;&#177; 240</td>
+<td>0.51 &#194;&#177; 0.02</td>
+<td>8.8 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="135" data-coords="08:51:49.4 -44:15:47"
+data-name="SAI 96" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_96/">SAI 96</a></td>
+<td class="name">FSR 1430</td>
+<td>08:51:49.4</td>
+<td>-44:15:47</td>
+<td>264.645</td>
+<td>0.077</td>
+<td>4.0</td>
+<td>2840 &#194;&#177; 470</td>
+<td>2.5 &#194;&#177; 0.33</td>
+<td>8.85 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="136" data-coords="08:52:53.3 -44:12:06"
+data-name="SAI 97" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_97/">SAI 97</a></td>
+<td class="name">FSR 1432</td>
+<td>08:52:53.3</td>
+<td>-44:12:06</td>
+<td>264.720</td>
+<td>0.263</td>
+<td>4.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="141" data-coords="09:05:43.2 -37:52:05"
+data-name="SAI 102" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_102/">SAI 102</a></td>
+<td class="name">FSR 1402</td>
+<td>09:05:43.2</td>
+<td>-37:52:05</td>
+<td>261.505</td>
+<td>6.234</td>
+<td>4.0</td>
+<td>2550 &#194;&#177; 360</td>
+<td>0.08 &#194;&#177; 0.04</td>
+<td>9.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="144" data-coords="09:10:24.5 -49:54:46"
+data-name="SAI 105" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_105/">SAI 105</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>09:10:24.5</td>
+<td>-49:54:46</td>
+<td>270.975</td>
+<td>-1.275</td>
+<td>4.0</td>
+<td>2950 &#194;&#177; 180</td>
+<td>1.91 &#194;&#177; 0.31</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="158" data-coords="13:41:04.5 -60:12:27"
+data-name="SAI 117" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_117/">SAI 117</a></td>
+<td class="name">FSR 1663</td>
+<td>13:41:04.5</td>
+<td>-60:12:27</td>
+<td>309.065</td>
+<td>2.072</td>
+<td>4.0</td>
+<td>2150 &#194;&#177; 260</td>
+<td>1.01 &#194;&#177; 0.16</td>
+<td>8.9 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="168" data-coords="19:06:52.8 +13:14:44"
+data-name="SAI 127" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_127/">SAI 127</a></td>
+<td class="name">FSR 124</td>
+<td>19:06:52.8</td>
+<td>+13:14:44</td>
+<td>46.468</td>
+<td>2.645</td>
+<td>4.0</td>
+<td>2050 &#194;&#177; 430</td>
+<td>0.98 &#194;&#177; 0.12</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="174" data-coords="20:01:58.7 +31:26:18"
+data-name="SAI 133" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_133/">SAI 133</a></td>
+<td class="name">Kronberger 69</td>
+<td>20:01:58.7</td>
+<td>+31:26:18</td>
+<td>68.529</td>
+<td>0.446</td>
+<td>4.0</td>
+<td>6140 &#194;&#177; 470</td>
+<td>1.8 &#194;&#177; 0.05</td>
+<td>7.85 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="175" data-coords="20:02:26.8 +35:40:34"
+data-name="SAI 134" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_134/">SAI 134</a></td>
+<td class="name">FSR 198</td>
+<td>20:02:26.8</td>
+<td>+35:40:34</td>
+<td>72.177</td>
+<td>2.608</td>
+<td>4.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="182" data-coords="21:02:20.1 +48:06:26"
+data-name="SAI 140" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_140/">SAI 140</a></td>
+<td class="name">FSR 282</td>
+<td>21:02:20.1</td>
+<td>+48:06:26</td>
+<td>88.748</td>
+<td>1.041</td>
+<td>4.0</td>
+<td>2280 &#194;&#177; 130</td>
+<td>0.78 &#194;&#177; 0.01</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="186" data-coords="21:45:43.6 +58:05:03"
+data-name="SAI 144" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_144/">SAI 144</a></td>
+<td class="name">Teutsch 74</td>
+<td>21:45:43.6</td>
+<td>+58:05:03</td>
+<td>100.364</td>
+<td>3.597</td>
+<td>4.0</td>
+<td>2650 &#194;&#177; 730</td>
+<td>1.05 &#194;&#177; 0.17</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="193" data-coords="22:39:27.8 +58:59:50"
+data-name="Berkeley 97" data-radius="3.600">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_97/">Berkeley 97</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:39:27.8</td>
+<td>+58:59:50</td>
+<td>106.643</td>
+<td>0.364</td>
+<td>4.0</td>
+<td>2410 &#194;&#177; 220</td>
+<td>0.77 &#194;&#177; 0.06</td>
+<td>8.4 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="203" data-coords="23:56:37.5 +61:24:02"
+data-name="NGC 7788" data-radius="3.600" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ngc_7788/">NGC 7788</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>23:56:37.5</td>
+<td>+61:24:02</td>
+<td>116.420</td>
+<td>-0.776</td>
+<td>4.0</td>
+<td>2750 &#194;&#177; 220</td>
+<td>0.49 &#194;&#177; 0.02</td>
+<td>8.2 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="9" data-coords="00:40:08.8 +61:34:03"
+data-name="SAI 8" data-radius="2.700">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/sai_8/">SAI
+8</a></td>
+<td class="name">FSR 505</td>
+<td>00:40:08.8</td>
+<td>+61:34:03</td>
+<td>121.588</td>
+<td>-1.275</td>
+<td>3.0</td>
+<td>7200 &#194;&#177; 700</td>
+<td>0.3 &#194;&#177; 0.11</td>
+<td>9.15 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="11" data-coords="00:43:03.2 +41:37:21"
+data-name="SAI 10" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_10/">SAI 10</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>00:43:03.2</td>
+<td>+41:37:21</td>
+<td>121.251</td>
+<td>-21.222</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="19" data-coords="02:21:55.9 +61:07:21"
+data-name="SAI 18" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_18/">SAI 18</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:21:55.9</td>
+<td>+61:07:21</td>
+<td>133.638</td>
+<td>0.146</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="22" data-coords="02:34:45.4 +62:34:22"
+data-name="SAI 21" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_21/">SAI 21</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:34:45.4</td>
+<td>+62:34:22</td>
+<td>134.517</td>
+<td>2.048</td>
+<td>3.0</td>
+<td>1860 &#194;&#177; 90</td>
+<td>0.58 &#194;&#177; 0.01</td>
+<td>&lt; 8.5</td>
+</tr>
+<tr name="tr1" data-index="27" data-coords="03:09:30.8 +56:47:26"
+data-name="SAI 26" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_26/">SAI 26</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:09:30.8</td>
+<td>+56:47:26</td>
+<td>141.017</td>
+<td>-1.153</td>
+<td>3.0</td>
+<td>2280 &#194;&#177; 600</td>
+<td>1.47 &#194;&#177; 0.29</td>
+<td>&lt; 8.2</td>
+</tr>
+<tr name="tr1" data-index="29" data-coords="03:39:16.7 +55:58:24"
+data-name="SAI 28" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_28/">SAI 28</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:39:16.7</td>
+<td>+55:58:24</td>
+<td>144.904</td>
+<td>0.434</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="31" data-coords="03:40:22.2 +82:13:60"
+data-name="SAI 30" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_30/">SAI 30</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>03:40:22.2</td>
+<td>+82:13:60</td>
+<td>128.526</td>
+<td>21.269</td>
+<td>3.0</td>
+<td>3100 &#194;&#177; 80</td>
+<td>1.25 &#194;&#177; 0.44</td>
+<td>&lt; 8.0</td>
+</tr>
+<tr name="tr1" data-index="37" data-coords="04:16:50.4 +41:04:00"
+data-name="SAI 36" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_36/">SAI 36</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>04:16:50.4</td>
+<td>+41:04:00</td>
+<td>159.307</td>
+<td>-6.865</td>
+<td>3.0</td>
+<td>3000 &#194;&#177; 270</td>
+<td>0.55 &#194;&#177; 0.05</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="47" data-coords="05:19:37.0 +36:30:32"
+data-name="SAI 46" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_46/">SAI 46</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:19:37.0</td>
+<td>+36:30:32</td>
+<td>170.675</td>
+<td>-0.442</td>
+<td>3.0</td>
+<td>4290 &#194;&#177; 240</td>
+<td>0.78 &#194;&#177; 0.01</td>
+<td>9.45 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="48" data-coords="05:23:58.0 +42:18:52"
+data-name="SAI 47" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_47/">SAI 47</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:23:58.0</td>
+<td>+42:18:52</td>
+<td>166.370</td>
+<td>3.546</td>
+<td>3.0</td>
+<td>3860 &#194;&#177; 90</td>
+<td>0.6 &#194;&#177; 0.01</td>
+<td>8.5 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="55" data-coords="05:28:38.9 +35:01:19"
+data-name="SAI 50" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_50/">SAI 50</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:28:38.9</td>
+<td>+35:01:19</td>
+<td>172.936</td>
+<td>0.234</td>
+<td>3.0</td>
+<td>21900 &#194;&#177; 5700</td>
+<td>0.6 &#194;&#177; 0.3</td>
+<td>9.7 &#194;&#177; 0.2</td>
+</tr>
+<tr name="tr1" data-index="56" data-coords="05:30:01.9 +33:25:31"
+data-name="SAI 51" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_51/">SAI 51</a></td>
+<td class="name">Teutsch 133</td>
+<td>05:30:01.9</td>
+<td>+33:25:31</td>
+<td>174.424</td>
+<td>-0.410</td>
+<td>3.0</td>
+<td>810 &#194;&#177; 80</td>
+<td>0.62 &#194;&#177; 0.18</td>
+<td>&lt; 9.3</td>
+</tr>
+<tr name="tr1" data-index="59" data-coords="05:38:09.1 +31:44:16"
+data-name="SAI 52" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_52/">SAI 52</a></td>
+<td class="name">FSR 812</td>
+<td>05:38:09.1</td>
+<td>+31:44:16</td>
+<td>176.770</td>
+<td>0.111</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="60" data-coords="05:39:30.0 +33:21:00"
+data-name="Koposov 27" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_27/">Koposov 27</a></td>
+<td class="name">Teutsch 1</td>
+<td>05:39:30.0</td>
+<td>+33:21:00</td>
+<td>175.558</td>
+<td>1.211</td>
+<td>3.0</td>
+<td>3700 &#194;&#177; 900</td>
+<td>0.45 &#194;&#177; 0.1</td>
+<td>&lt; 8.65</td>
+</tr>
+<tr name="tr1" data-index="62" data-coords="05:40:56.7 +32:16:33"
+data-name="Berkeley 71" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_71/">Berkeley 71</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:40:56.7</td>
+<td>+32:16:33</td>
+<td>176.630</td>
+<td>0.898</td>
+<td>3.0</td>
+<td>2450 &#194;&#177; 110</td>
+<td>0.91 &#194;&#177; 0.05</td>
+<td>8.8 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="63" data-coords="05:40:58.3 +20:21:18"
+data-name="SAI 53" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_53/">SAI 53</a></td>
+<td class="name">FSR 874</td>
+<td>05:40:58.3</td>
+<td>+20:21:18</td>
+<td>186.770</td>
+<td>-5.389</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="64" data-coords="05:42:22.4 +22:50:04"
+data-name="SAI 54" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_54/">SAI 54</a></td>
+<td class="name">FSR 855</td>
+<td>05:42:22.4</td>
+<td>+22:50:04</td>
+<td>184.823</td>
+<td>-3.813</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="65" data-coords="05:42:51.2 +28:56:43"
+data-name="SAI 55" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_55/">SAI 55</a></td>
+<td class="name">FSR 826</td>
+<td>05:42:51.2</td>
+<td>+28:56:43</td>
+<td>179.675</td>
+<td>-0.511</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="84" data-coords="06:08:56.2 +26:15:49"
+data-name="Koposov 53" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_53/">Koposov 53</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:08:56.2</td>
+<td>+26:15:49</td>
+<td>184.903</td>
+<td>3.131</td>
+<td>3.0</td>
+<td>3200 &#194;&#177; 100</td>
+<td>0.34 &#194;&#177; 0.04</td>
+<td>&lt; 8.5</td>
+</tr>
+<tr name="tr1" data-index="88" data-coords="06:11:49.0 +07:01:22"
+data-name="SAI 62" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_62/">SAI 62</a></td>
+<td class="name">FSR 985</td>
+<td>06:11:49.0</td>
+<td>+07:01:22</td>
+<td>202.123</td>
+<td>-5.520</td>
+<td>3.0</td>
+<td>2630 &#194;&#177; 110</td>
+<td>0.55 &#194;&#177; 0.02</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="94" data-coords="06:31:16.2 +11:04:38"
+data-name="SAI 65" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_65/">SAI 65</a></td>
+<td class="name">FSR 979</td>
+<td>06:31:16.2</td>
+<td>+11:04:38</td>
+<td>200.790</td>
+<td>0.622</td>
+<td>3.0</td>
+<td>2140 &#194;&#177; 50</td>
+<td>1.17 &#194;&#177; 0.17</td>
+<td>8.45 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="97" data-coords="06:44:42.7 -00:32:22"
+data-name="SAI 68" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_68/">SAI 68</a></td>
+<td class="name">Patchick 90</td>
+<td>06:44:42.7</td>
+<td>-00:32:22</td>
+<td>212.645</td>
+<td>-1.743</td>
+<td>3.0</td>
+<td>6310 &#194;&#177; 610</td>
+<td>0.41 &#194;&#177; 0.09</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="98" data-coords="06:45:27.8 -11:47:40"
+data-name="SAI 69" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_69/">SAI 69</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:45:27.8</td>
+<td>-11:47:40</td>
+<td>222.803</td>
+<td>-6.656</td>
+<td>3.0</td>
+<td>7140 &#194;&#177; 340</td>
+<td>0.35 &#194;&#177; 0.07</td>
+<td>9.1 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="103" data-coords="07:04:36.6 -06:36:38"
+data-name="SAI 74" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_74/">SAI 74</a></td>
+<td class="name">FSR 1150</td>
+<td>07:04:36.6</td>
+<td>-06:36:38</td>
+<td>220.313</td>
+<td>-0.098</td>
+<td>3.0</td>
+<td>5250 &#194;&#177; 670</td>
+<td>0.94 &#194;&#177; 0.06</td>
+<td>&lt; 8.3</td>
+</tr>
+<tr name="tr1" data-index="107" data-coords="07:34:39.8 -19:47:23"
+data-name="SAI 78" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_78/">SAI 78</a></td>
+<td class="name">Teutsch 61</td>
+<td>07:34:39.8</td>
+<td>-19:47:23</td>
+<td>235.375</td>
+<td>0.150</td>
+<td>3.0</td>
+<td>1920 &#194;&#177; 90</td>
+<td>0.55 &#194;&#177; 0.02</td>
+<td>6.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="112" data-coords="07:52:14.4 -33:02:27"
+data-name="SAI 82" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_82/">SAI 82</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>07:52:14.4</td>
+<td>-33:02:27</td>
+<td>248.827</td>
+<td>-3.038</td>
+<td>3.0</td>
+<td>1150 &#194;&#177; 30</td>
+<td>0.39 &#194;&#177; 0.07</td>
+<td>&lt; 9.45</td>
+</tr>
+<tr name="tr1" data-index="113" data-coords="07:53:20.1 -32:33:30"
+data-name="SAI 83" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_83/">SAI 83</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>07:53:20.1</td>
+<td>-32:33:30</td>
+<td>248.530</td>
+<td>-2.594</td>
+<td>3.0</td>
+<td>3900 &#194;&#177; 660</td>
+<td>1.0 &#194;&#177; 0.15</td>
+<td>8.85 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="117" data-coords="08:02:42.5 -32:03:02"
+data-name="Ruprecht 48" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ruprecht_48/">Ruprecht 48</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:02:42.5</td>
+<td>-32:03:02</td>
+<td>249.130</td>
+<td>-0.639</td>
+<td>3.0</td>
+<td>3030 &#194;&#177; 70</td>
+<td>0.29 &#194;&#177; 0.04</td>
+<td>&lt; 8.6</td>
+</tr>
+<tr name="tr1" data-index="123" data-coords="08:24:25.3 -39:56:11"
+data-name="SAI 89" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_89/">SAI 89</a></td>
+<td class="name">FSR 1387</td>
+<td>08:24:25.3</td>
+<td>-39:56:11</td>
+<td>258.126</td>
+<td>-1.340</td>
+<td>3.0</td>
+<td>2310 &#194;&#177; 200</td>
+<td>1.19 &#194;&#177; 0.11</td>
+<td>&lt; 8.8</td>
+</tr>
+<tr name="tr1" data-index="130" data-coords="08:40:21.9 -44:44:01"
+data-name="SAI 93" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_93/">SAI 93</a></td>
+<td class="name">FSR 1415</td>
+<td>08:40:21.9</td>
+<td>-44:44:01</td>
+<td>263.737</td>
+<td>-1.812</td>
+<td>3.0</td>
+<td>3530 &#194;&#177; 100</td>
+<td>1.87 &#194;&#177; 0.35</td>
+<td>9.25 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="139" data-coords="08:58:12.2 -46:17:19"
+data-name="SAI 100" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_100/">SAI 100</a></td>
+<td class="name">FSR 1450</td>
+<td>08:58:12.2</td>
+<td>-46:17:19</td>
+<td>266.917</td>
+<td>-0.373</td>
+<td>3.0</td>
+<td>5370 &#194;&#177; 200</td>
+<td>1.62 &#194;&#177; 0.08</td>
+<td>9.1 &#194;&#177; 0.15</td>
+</tr>
+<tr name="tr1" data-index="143" data-coords="09:09:54.8 -48:51:03"
+data-name="SAI 104" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_104/">SAI 104</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>09:09:54.8</td>
+<td>-48:51:03</td>
+<td>270.143</td>
+<td>-0.610</td>
+<td>3.0</td>
+<td>830 &#194;&#177; 55</td>
+<td>1.17 &#194;&#177; 0.11</td>
+<td>&lt; 8.9</td>
+</tr>
+<tr name="tr1" data-index="146" data-coords="09:28:35.8 -46:36:00"
+data-name="SAI 107" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_107/">SAI 107</a></td>
+<td class="name">Teutsch 103</td>
+<td>09:28:35.8</td>
+<td>-46:36:00</td>
+<td>270.750</td>
+<td>3.206</td>
+<td>3.0</td>
+<td>2790 &#194;&#177; 530</td>
+<td>0.62 &#194;&#177; 0.06</td>
+<td>&lt; 8.75</td>
+</tr>
+<tr name="tr1" data-index="153" data-coords="10:48:55.7 -59:02:58"
+data-name="SAI 114" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_114/">SAI 114</a></td>
+<td class="name">FSR 1555</td>
+<td>10:48:55.7</td>
+<td>-59:02:58</td>
+<td>287.742</td>
+<td>0.161</td>
+<td>3.0</td>
+<td>4790 &#194;&#177; 710</td>
+<td>0.76 &#194;&#177; 0.05</td>
+<td>9.25 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="165" data-coords="16:51:35.8 -42:25:47"
+data-name="SAI 124" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_124/">SAI 124</a></td>
+<td class="name">FSR 1744</td>
+<td>16:51:35.8</td>
+<td>-42:25:47</td>
+<td>342.694</td>
+<td>1.170</td>
+<td>3.0</td>
+<td>3130 &#194;&#177; 400</td>
+<td>2.58 &#194;&#177; 0.34</td>
+<td>8.85 &#194;&#177; 0.2</td>
+</tr>
+<tr name="tr1" data-index="167" data-coords="18:13:26.7 -17:52:49"
+data-name="SAI 126" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_126/">SAI 126</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>18:13:26.7</td>
+<td>-17:52:49</td>
+<td>12.758</td>
+<td>-0.013</td>
+<td>3.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="170" data-coords="19:44:44.3 +26:54:08"
+data-name="SAI 129" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_129/">SAI 129</a></td>
+<td class="name">FSR 160</td>
+<td>19:44:44.3</td>
+<td>+26:54:08</td>
+<td>62.704</td>
+<td>1.341</td>
+<td>3.0</td>
+<td>7520 &#194;&#177; 1110</td>
+<td>1.42 &#194;&#177; 0.05</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="172" data-coords="19:48:00.8 +23:20:53"
+data-name="SAI 131" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_131/">SAI 131</a></td>
+<td class="name">FSR 154</td>
+<td>19:48:00.8</td>
+<td>+23:20:53</td>
+<td>60.003</td>
+<td>-1.086</td>
+<td>3.0</td>
+<td>2790 &#194;&#177; 70</td>
+<td>0.7 &#194;&#177; 0.13</td>
+<td>9.05 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="183" data-coords="21:03:46.7 +47:12:54"
+data-name="SAI 142" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_142/">SAI 142</a></td>
+<td class="name">Teutsch 156</td>
+<td>21:03:46.7</td>
+<td>+47:12:54</td>
+<td>88.243</td>
+<td>0.267</td>
+<td>3.0</td>
+<td>3930 &#194;&#177; 420</td>
+<td>0.94 &#194;&#177; 0.04</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="184" data-coords="21:03:46.9 +46:58:50"
+data-name="SAI 141" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_141/">SAI 141</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>21:03:46.9</td>
+<td>+46:58:50</td>
+<td>88.068</td>
+<td>0.110</td>
+<td>3.0</td>
+<td>4940 &#194;&#177; 380</td>
+<td>0.94 &#194;&#177; 0.04</td>
+<td>8.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="185" data-coords="21:10:51.4 +50:18:31"
+data-name="SAI 143" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_143/">SAI 143</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>21:10:51.4</td>
+<td>+50:18:31</td>
+<td>91.314</td>
+<td>1.492</td>
+<td>3.0</td>
+<td>6520 &#194;&#177; 530</td>
+<td>1.72 &#194;&#177; 0.24</td>
+<td>9.25 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="192" data-coords="22:29:49.2 +55:23:47"
+data-name="Berkeley 96" data-radius="2.700">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/berkeley_96/">Berkeley 96</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>22:29:49.2</td>
+<td>+55:23:47</td>
+<td>103.710</td>
+<td>-2.100</td>
+<td>3.0</td>
+<td>3180 &#194;&#177; 440</td>
+<td>0.54 &#194;&#177; 0.03</td>
+<td>7.6 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="16" data-coords="01:49:52.6 +53:54:34"
+data-name="SAI 15" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_15/">SAI 15</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>01:49:52.6</td>
+<td>+53:54:34</td>
+<td>131.561</td>
+<td>-7.980</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="18" data-coords="02:20:48.3 +59:11:06"
+data-name="SAI 17" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_17/">SAI 17</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:20:48.3</td>
+<td>+59:11:06</td>
+<td>134.166</td>
+<td>-1.724</td>
+<td>2.0</td>
+<td>3800 &#194;&#177; 150</td>
+<td>0.98 &#194;&#177; 0.17</td>
+<td>8.9 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="24" data-coords="02:54:05.0 +60:39:52"
+data-name="SAI 23" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_23/">SAI 23</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>02:54:05.0</td>
+<td>+60:39:52</td>
+<td>137.404</td>
+<td>1.286</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="34" data-coords="04:02:20.2 +52:26:39"
+data-name="SAI 33" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_33/">SAI 33</a></td>
+<td class="name">Juchert 19</td>
+<td>04:02:20.2</td>
+<td>+52:26:39</td>
+<td>149.740</td>
+<td>-0.197</td>
+<td>2.0</td>
+<td>1340 &#194;&#177; 50</td>
+<td>0.28 &#194;&#177; 0.01</td>
+<td>&lt; 9.3</td>
+</tr>
+<tr name="tr1" data-index="39" data-coords="04:56:05.6 +47:23:25"
+data-name="SAI 38" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_38/">SAI 38</a></td>
+<td class="name">FSR 699</td>
+<td>04:56:05.6</td>
+<td>+47:23:25</td>
+<td>159.349</td>
+<td>2.579</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="42" data-coords="05:07:05.4 +38:25:05"
+data-name="SAI 41" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_41/">SAI 41</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:07:05.4</td>
+<td>+38:25:05</td>
+<td>167.670</td>
+<td>-1.334</td>
+<td>2.0</td>
+<td>5200 &#194;&#177; 580</td>
+<td>0.51 &#194;&#177; 0.18</td>
+<td>9.3 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="44" data-coords="05:08:16.6 +49:52:08"
+data-name="SAI 43" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_43/">SAI 43</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>05:08:16.6</td>
+<td>+49:52:08</td>
+<td>158.608</td>
+<td>5.685</td>
+<td>2.0</td>
+<td>3840 &#194;&#177; 130</td>
+<td>0.18 &#194;&#177; 0.03</td>
+<td>8.95 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="72" data-coords="05:51:11.0 +25:46:41"
+data-name="Koposov 58" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/koposov_58/">Koposov 58</a></td>
+<td class="name">FSR 849</td>
+<td>05:51:11.0</td>
+<td>+25:46:41</td>
+<td>183.342</td>
+<td>-0.572</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="85" data-coords="06:09:21.3 +31:13:54"
+data-name="DC 8" data-radius="1.800">
+<td class="name"><a href="http://ocl.sai.msu.ru/catalog/dc_8/">DC
+8</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>06:09:21.3</td>
+<td>+31:13:54</td>
+<td>180.574</td>
+<td>5.594</td>
+<td>2.0</td>
+<td>2100 &#194;&#177; 300</td>
+<td>0.72 &#194;&#177; 0.06</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="102" data-coords="07:00:13.1 -10:19:14"
+data-name="SAI 73" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_73/">SAI 73</a></td>
+<td class="name">FSR 1171</td>
+<td>07:00:13.1</td>
+<td>-10:19:14</td>
+<td>223.117</td>
+<td>-2.760</td>
+<td>2.0</td>
+<td>4110 &#194;&#177; 590</td>
+<td>0.65 &#194;&#177; 0.07</td>
+<td>9.5 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="114" data-coords="07:58:21.6 -34:46:09"
+data-name="SAI 84" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_84/">SAI 84</a></td>
+<td class="name">Kronberger 85</td>
+<td>07:58:21.6</td>
+<td>-34:46:09</td>
+<td>250.965</td>
+<td>-2.842</td>
+<td>2.0</td>
+<td>8500 &#194;&#177; 440</td>
+<td>1.17 &#194;&#177; 0.19</td>
+<td>8.8 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="120" data-coords="08:11:21.7 -31:56:37"
+data-name="Ruprecht 54" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/ruprecht_54/">Ruprecht 54</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:11:21.7</td>
+<td>-31:56:37</td>
+<td>250.030</td>
+<td>0.963</td>
+<td>2.0</td>
+<td>3480 &#194;&#177; 460</td>
+<td>0.35 &#194;&#177; 0.04</td>
+<td>8.45 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="121" data-coords="08:12:57.6 -41:53:01"
+data-name="SAI 88" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_88/">SAI 88</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:12:57.6</td>
+<td>-41:53:01</td>
+<td>258.521</td>
+<td>-4.225</td>
+<td>2.0</td>
+<td>8240 &#194;&#177; 1000</td>
+<td>0.92 &#194;&#177; 0.02</td>
+<td>9.0 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="125" data-coords="08:26:51.2 -41:14:39"
+data-name="ESO 312-04" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/eso_312-04/">ESO 312-04</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>08:26:51.2</td>
+<td>-41:14:39</td>
+<td>259.461</td>
+<td>-1.719</td>
+<td>2.0</td>
+<td>2410 &#194;&#177; 130</td>
+<td>0.49 &#194;&#177; 0.01</td>
+<td>&lt; 8.75</td>
+</tr>
+<tr name="tr1" data-index="149" data-coords="09:48:00.8 -55:04:01"
+data-name="SAI 110" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_110/">SAI 110</a></td>
+<td class="name">FSR 1509</td>
+<td>09:48:00.8</td>
+<td>-55:04:01</td>
+<td>278.665</td>
+<td>-1.083</td>
+<td>2.0</td>
+<td>2080 &#194;&#177; 50</td>
+<td>1.17 &#194;&#177; 0.13</td>
+<td>8.75 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="151" data-coords="10:21:24.9 -59:05:34"
+data-name="SAI 112" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_112/">SAI 112</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>10:21:24.9</td>
+<td>-59:05:34</td>
+<td>284.700</td>
+<td>-1.638</td>
+<td>2.0</td>
+<td>7240 &#194;&#177; 520</td>
+<td>1.0 &#194;&#177; 0.02</td>
+<td>9.1 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="152" data-coords="10:22:43.6 -59:30:20"
+data-name="SAI 113" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_113/">SAI 113</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>10:22:43.6</td>
+<td>-59:30:20</td>
+<td>285.064</td>
+<td>-1.895</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="160" data-coords="13:44:14.2 -62:04:03"
+data-name="SAI 119" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_119/">SAI 119</a></td>
+<td class="name">FSR 1662</td>
+<td>13:44:14.2</td>
+<td>-62:04:03</td>
+<td>309.072</td>
+<td>0.173</td>
+<td>2.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="161" data-coords="13:58:42.0 -61:40:08"
+data-name="SAI 120" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_120/">SAI 120</a></td>
+<td class="name">&#226;&#8364;&#8221;</td>
+<td>13:58:42.0</td>
+<td>-61:40:08</td>
+<td>310.823</td>
+<td>0.168</td>
+<td>2.0</td>
+<td>2550 &#194;&#177; 260</td>
+<td>1.99 &#194;&#177; 0.3</td>
+<td>8.75 &#194;&#177; 0.1</td>
+</tr>
+<tr name="tr1" data-index="181" data-coords="21:01:40.8 +44:06:43"
+data-name="SAI 139" data-radius="1.800">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_139/">SAI 139</a></td>
+<td class="name">Teutsch 22</td>
+<td>21:01:40.8</td>
+<td>+44:06:43</td>
+<td>85.678</td>
+<td>-1.519</td>
+<td>2.0</td>
+<td>2700 &#194;&#177; 440</td>
+<td>0.86 &#194;&#177; 0.13</td>
+<td>8.55 &#194;&#177; 0.05</td>
+</tr>
+<tr name="tr1" data-index="33" data-coords="03:56:11.8 +53:52:09"
+data-name="SAI 32" data-radius="0.900">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_32/">SAI 32</a></td>
+<td class="name">FSR 655</td>
+<td>03:56:11.8</td>
+<td>+53:52:09</td>
+<td>148.114</td>
+<td>0.287</td>
+<td>1.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="40" data-coords="04:58:31.6 +47:59:03"
+data-name="SAI 39" data-radius="0.900">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_39/">SAI 39</a></td>
+<td class="name">FSR 696</td>
+<td>04:58:31.6</td>
+<td>+47:59:03</td>
+<td>159.138</td>
+<td>3.269</td>
+<td>1.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+<tr name="tr1" data-index="204" data-coords="23:57:04.4 +65:24:52"
+data-name="SAI 152" data-radius="0.900" class="">
+<td class="name"><a href=
+"http://ocl.sai.msu.ru/catalog/sai_152/">SAI 152</a></td>
+<td class="name">FSR 469</td>
+<td>23:57:04.4</td>
+<td>+65:24:52</td>
+<td>117.313</td>
+<td>3.138</td>
+<td>1.0</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+<td>&#226;&#8364;&#8221;</td>
+</tr>
+</tbody>
+</table>
 	</body>
 </html>

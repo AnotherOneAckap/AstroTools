@@ -4,10 +4,11 @@ var AstroTools = (function() {
 	var waitingForHub;
 	var isHubOnlineInterval;
 	var defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp';
+	var table;
 
 	var UI = {
 		init: function() {
-			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><ul id="astrotools-client-list"></ul></div>');
+			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul></div>');
 			if ( SAMPConnection ) {
 				UI.VOMode('on');
 			}
@@ -24,8 +25,16 @@ var AstroTools = (function() {
 						.off('click')
 						.on( 'click', function() { session.set('VOMode', '0'); disconnect(); } )
 						.removeAttr('disabled');
+					if ( table ) {
+						$('#astrotools-ui-container .button-rebroadcast-table').on('click', function() {
+							table.broadcast();
+						});
+						$('#astrotools-ui-container .button-rebroadcast-table .table-name').text(table.name);
+						$('#astrotools-ui-container .button-rebroadcast-table').show();
+					}
 					break;
 				case 'connecting':
+					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					$('#astrotools-ui-container .vo-mode-indicator').text('connecting');
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
@@ -40,6 +49,7 @@ var AstroTools = (function() {
 						.off('click')
 						.on( 'click', function() { session.set('VOMode', '1'); connect(); } )
 						.removeAttr('disabled');
+					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					break;
 			}
 		},
@@ -61,10 +71,11 @@ var AstroTools = (function() {
 	function init( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
-		defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
+		defaultHubUrl = options instanceof Object ? options['defaultHubUrl'] : defaultHubUrl;
 		UI.init();
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
+		if ( this.tableId ) table = new Table( this.tableId );
 
 		//NB can we check session for previous connection and re-use it?
 		if ( session.get('VOMode') == 1 ) connect();
@@ -82,11 +93,7 @@ var AstroTools = (function() {
 			var $button = $('<button>', { 'type': 'button', 'text': 'Broadcast', 'class': 'vo-broadcast-button' });
 			$link.after($button);
 			$button.on('click', function() {
-				var url = $link.attr('href');
-				// href may be full url, path relative host root (href="/foo") 
-				// or path relative current location (href="bar")
-				url = url.substr(1) == '/' ? url.substr(4) == 'http' ? url : location.href.replace(/\/+[^/]+$/,'') + url : location.protocol + '//' + location.host + url;
-				var params = {'url': url};
+				var params = {'url': absolutizeURL( $link.attr('href') ) };
 				if ( $link.attr('data-vo-table-id') ) params['table-id'] = $link.attr('data-vo-table-id');
 				if ( $link.attr('data-vo-table-name') ) params['name'] = $link.attr('data-vo-table-name');
 
@@ -150,6 +157,15 @@ var AstroTools = (function() {
 		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
 		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
 		UI.VOMode('on');
+
+		if ( table ) {
+			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
+			if ( ! broadcastedTables[ table.id ] ) {
+				table.broadcast();
+				broadcastedTables[table.id] = 1;
+				session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
+			}
+		}
 	}
 
 	function onHubCheck( result ) {
@@ -218,8 +234,38 @@ var AstroTools = (function() {
 		}
   };
 
+	// Table class
+	function Table( tableId ) {
+		var $table = $( document.getElementById(tableId) );
+		if ( ! $table.length ) return;
+
+		this.$table = $table;
+		this.id = $table.attr('data-vo-table-id');
+		this.name = $table.attr('data-vo-table-name');
+		this.url = $table.attr('data-vo-table-url');
+
+		this.broadcast = function() {
+			// broadcast table once in a session
+			var params = { 'url': absolutizeURL(this.url) };
+			if ( this.id ) params['table-id'] = $table.attr('data-vo-table-id');
+			if ( this.name ) params['name'] = $table.attr('data-vo-table-name');
+
+  	  var message = new samp.Message('table.load.votable', params);
+		  SAMPConnection.notifyAll([message]);
+		}
+
+		return this;
+	}
+
+	function absolutizeURL( url ) {
+		// url may be already full
+		// url may be path relative host root (href="/foo")
+		// else it's path relative current location (href="bar")
+		return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'') + url;
+	}
+
 	return {
-		init: init
+		init: init,
+		Table: Table
 	}
 })();
-$( AstroTools.init );

@@ -16,3 +16,7 @@
 	width: 2em;
 	height: 2em;
 }
+
+#astrotools-ui-container .button-rebroadcast-table {
+	display:none;
+}
