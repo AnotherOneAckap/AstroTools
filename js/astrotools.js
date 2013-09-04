@@ -157,7 +157,11 @@ var AstroTools = (function() {
 		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
 		UI.VOMode('on');
 
-		if ( AstroTools.tableId ) table = new Table( AstroTools.tableId );// bad code
+		if ( AstroTools.tableId ) {// bad code
+			table = new Table( AstroTools.tableId );
+			AstroTools.table = table;
+			table.makeSortable();
+		}
 		if ( table ) {
 			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
 			if ( ! broadcastedTables[ table.id ] ) {
@@ -245,9 +249,11 @@ var AstroTools = (function() {
 		this.name = $table.attr('data-vo-table-name');
 		this.url = absolutizeURL( $table.attr('data-vo-table-url') );
 
+
+		//TODO move this to prototype?
 		this.broadcast = function() {
-			// broadcast table once in a session
-			var params = { 'url': absolutizeURL(this.url) };
+			// broadcast table to others
+			var params = { 'url': this.url };
 			if ( this.id ) params['table-id'] = $table.attr('data-vo-table-id');
 			if ( this.name ) params['name'] = $table.attr('data-vo-table-name');
 
@@ -255,6 +261,8 @@ var AstroTools = (function() {
 		  SAMPConnection.notifyAll([message]);
 		}
 
+
+		//TODO move this to function and call only with connection
 		// table row highlighting send
 		$table.on( 'mouseover', 'tbody tr', function() {
 			$(this).addClass('at-table-row-highlighted');
@@ -278,6 +286,98 @@ var AstroTools = (function() {
 			window.scrollTo( 0, $row.position().top );
 		};
 
+		// coordinate columns init
+		$table.find('col.coords').each( function() {
+			var i = $(this).index();
+			$table.find('tr').find('td:nth('+i+')').addClass('at-table-cell-coords');
+		});
+
+		$table.on('click', '.at-table-cell-coords', function() {
+			var
+				$row = $(this).parent(),
+				aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
+				message;
+			
+			// sending to Aladin
+			aladinScript = aladinScript.replace( /#{coords}/g, $row.attr('data-coords') )
+				.replace(/#{name}/g,   $row.attr('data-name')   )
+				.replace(/#{radius}/g, $row.attr('data-radius') );
+			message = new samp.Message('script.aladin.send', {
+					'script': aladinScript
+			});
+		  SAMPConnection.notifyAll([message]);
+
+			// sending to others
+      var
+				coords = $row.attr('data-coords').split(' '),
+      	ra  = sexaToDec(coords[0]),
+      	dec = sexaToDec(coords[1]);
+			message = new samp.Message('coords.pointAt.sky', {
+				'ra': ra.toString(),
+				'dec': dec.toString()
+			});
+		  SAMPConnection.notifyAll([message]);
+		});
+
+		//TODO move this to prototype?
+		this.makeSortable = function() {
+			$table.on('click', 'thead th', function() {
+				var
+					$rows = $table.find('tbody tr'),
+					index = $(this).index(),
+					rowSorters = {};
+				
+				rowSorters['string'] = function( rowA, rowB ) {
+					var
+						a = rowA.children[index].textContent.trim().toLowerCase(),
+						b = rowB.children[index].textContent.trim().toLowerCase();
+					if ( a > b ) return 1;
+					if ( a < b ) return -1;
+					if ( a == b ) return 0;
+				};
+				rowSorters['numerical'] = function( rowA, rowB ) {
+					var
+						a = rowA.children[index].textContent,
+						b = rowB.children[index].textContent;
+					return a-b;
+				};
+				rowSorters['sexagesimal'] = function( rowA, rowB ) {
+					var
+						a = rowA.children[index].textContent.trim().replace(/^([0-9])/, '+$1'),
+						b = rowB.children[index].textContent.trim().replace(/^([0-9])/, '+$1'),
+						firstA = a.substr(0,1),
+						firstB = b.substr(0,1);
+					 
+					// because '+' < '-'
+					if ( firstA < firstB ) return 1;
+					if ( firstA > firstB ) return -1;
+					if ( firstA == '+' ) {
+						if ( a > b ) return 1;
+						if ( a < b ) return -1;
+						if ( a == b ) return 0;
+					}
+					// negative numbers
+					else {
+						if ( a > b ) return -1;
+						if ( a < b ) return 1;
+						if ( a == b ) return 0;
+					}
+				}
+				// if column is already sorted just reverse it
+				if ( $(this).hasClass('at-table-column-sorted') ) {
+					$table.append( $rows.detach().toArray().reverse() );
+					$(this).find('.at-sort-icon').toggle();
+				}
+				else {
+					$table.find('thead th.at-table-column-sorted')
+						.removeClass('at-table-column-sorted')
+						.find('.at-sort-icon').remove();
+					$table.append( $rows.detach().toArray().sort( rowSorters[this.getAttribute('data-type')||'numerical'] ));
+					$(this).addClass('at-table-column-sorted').append('<span class="at-sort-icon at-sort-icon-asc">&nbsp;Asc&nbsp;</span><span class="at-sort-icon at-sort-icon-desc" style="display:none">&nbsp;Desc&nbsp;</span>');
+				}
+			});
+		};
+
 		return this;
 	}
 
@@ -288,8 +388,14 @@ var AstroTools = (function() {
 		return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'') + url;
 	}
 
+  function sexaToDec(sexa) {
+    var parts = sexa.split(':');
+    return 3600 * parts[0] + 60 * parts[1] + 1 * parts[2];
+  }
+
 	return {
 		init: init,
-		Table: Table
+		Table: Table,
+		Utils: { 'absolutizeURL': absolutizeURL, 'sexaToDec': sexaToDec }
 	}
 })();

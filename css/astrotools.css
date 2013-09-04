@@ -24,3 +24,8 @@
 .at-table-row-highlighted {
 	background-color: yellow;
 }
+
+.at-table-cell-coords {
+	text-decoration:underline;
+	cursor:pointer;
+}
