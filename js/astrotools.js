@@ -236,13 +236,14 @@ var AstroTools = (function() {
 
 	// Table class
 	function Table( tableId ) {
+		var that = this;
 		var $table = $( document.getElementById(tableId) );
 		if ( ! $table.length ) return;
 
 		this.$table = $table;
 		this.id = $table.attr('data-vo-table-id');
 		this.name = $table.attr('data-vo-table-name');
-		this.url = $table.attr('data-vo-table-url');
+		this.url = absolutizeURL( $table.attr('data-vo-table-url') );
 
 		this.broadcast = function() {
 			// broadcast table once in a session
@@ -253,6 +254,20 @@ var AstroTools = (function() {
   	  var message = new samp.Message('table.load.votable', params);
 		  SAMPConnection.notifyAll([message]);
 		}
+
+		$table.on( 'mouseover', 'tbody tr', function() {
+			$(this).css('background-color', 'yellow');
+			var message = new samp.Message('table.highlight.row', {
+				'table-id': that.id,
+				'url': that.url,
+				'row': this.getAttribute('data-index').toString()
+			});
+		  SAMPConnection.notifyAll([message]);
+		});
+
+		$table.on( 'mouseout', 'tbody tr', function() {
+			$(this).css('background-color', 'white');
+		});
 
 		return this;
 	}
