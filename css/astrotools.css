@@ -20,3 +20,7 @@
 #astrotools-ui-container .button-rebroadcast-table {
 	display:none;
 }
+
+.at-table-row-highlighted {
+	background-color: yellow;
+}

@@ -75,7 +75,6 @@ var AstroTools = (function() {
 		UI.init();
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
-		if ( this.tableId ) table = new Table( this.tableId );
 
 		//NB can we check session for previous connection and re-use it?
 		if ( session.get('VOMode') == 1 ) connect();
@@ -158,6 +157,7 @@ var AstroTools = (function() {
 		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
 		UI.VOMode('on');
 
+		if ( AstroTools.tableId ) table = new Table( AstroTools.tableId );// bad code
 		if ( table ) {
 			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
 			if ( ! broadcastedTables[ table.id ] ) {
@@ -255,8 +255,9 @@ var AstroTools = (function() {
 		  SAMPConnection.notifyAll([message]);
 		}
 
+		// table row highlighting send
 		$table.on( 'mouseover', 'tbody tr', function() {
-			$(this).css('background-color', 'yellow');
+			$(this).addClass('at-table-row-highlighted');
 			var message = new samp.Message('table.highlight.row', {
 				'table-id': that.id,
 				'url': that.url,
@@ -266,8 +267,16 @@ var AstroTools = (function() {
 		});
 
 		$table.on( 'mouseout', 'tbody tr', function() {
-			$(this).css('background-color', 'white');
+			$(this).removeClass('at-table-row-highlighted');
 		});
+
+		// table row highlighting receive
+		ClientTracker.callHandler['table.highlight.row'] = function(senderId, message, isCall) {
+			var $row = $table.find('tr[data-index="' + message['samp.params']['row'] +'"]');
+			$table.find('.at-table-row-highlighted').removeClass('at-table-row-highlighted');
+			$row.addClass('at-table-row-highlighted');
+			window.scrollTo( 0, $row.position().top );
+		};
 
 		return this;
 	}
