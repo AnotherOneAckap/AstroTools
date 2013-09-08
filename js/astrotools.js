@@ -23,7 +23,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { session.set('VOMode', '0'); disconnect(); } )
+						.on( 'click', function() { session.set('at-vo-mode', '0'); disconnect(); } )
 						.removeAttr('disabled');
 					if ( table ) {
 						$('#astrotools-ui-container .button-rebroadcast-table').on('click', function() {
@@ -39,7 +39,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { session.set('VOMode', '0'); disconnect(); } )
+						.on( 'click', function() { session.set('at-vo-mode', '0'); disconnect(); } )
 						.removeAttr('disabled');
 					break;
 				case 'off':
@@ -47,7 +47,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('on')
 						.off('click')
-						.on( 'click', function() { session.set('VOMode', '1'); connect(); } )
+						.on( 'click', function() { session.set('at-vo-mode', '1'); connect(); } )
 						.removeAttr('disabled');
 					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					break;
@@ -77,7 +77,7 @@ var AstroTools = (function() {
 		// $(window).unload( disconnect );
 
 		//NB can we check session for previous connection and re-use it?
-		if ( session.get('VOMode') == 1 ) connect();
+		if ( session.get('at-vo-mode') == 1 ) connect();
 		
 		makeLinksBroadcastable();
 
@@ -115,21 +115,17 @@ var AstroTools = (function() {
 
 	function connect() {
 		UI.VOMode('connecting');
-		var pk = session.get('PrivateKey');
+		var pk = session.get('at-private-key');
 		if ( pk && pk != undefined ) {
 			onConnect( new samp.Connection({ 'samp.private-key': pk }) );
 			return;
-		}
-		if ( SAMPConnection && SAMPConnection.closed == false ) {
-			UI.VOMode('on');
-			return; 
 		}
 		samp.register( 'AstroTools', onConnect, onConnectionError );
 	}
 
 	function onError() {
 		SAMPConnection.close;
-		session.set( 'PrivateKey', '' );
+		session.set( 'at-private-key', '' );
 		UI.VOMode('off');
 		UI.clearClientList();
 	}
@@ -139,11 +135,15 @@ var AstroTools = (function() {
 	function disconnect() {
 		if ( SAMPConnection ) {
 			SAMPConnection.close();
-			session.set( 'PrivateKey', '' );
+			session.set( 'at-private-key', '' );
+		}
+		if ( table ) {
+			table.disableRowHighlighting();
+			table.disableCoordinatesHandler();
 		}
 		SAMPConnection = undefined;
-		UI.VOMode('off');
 		UI.clearClientList();
+		UI.VOMode('off');
 	}
 
 	function onConnect( connection ) {
@@ -154,13 +154,15 @@ var AstroTools = (function() {
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
 		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
-		session.set( 'PrivateKey', SAMPConnection.regInfo['samp.private-key'] );
-		UI.VOMode('on');
+		session.set( 'at-private-key', SAMPConnection.regInfo['samp.private-key'] );
 
-		if ( AstroTools.tableId ) {// bad code
+		if ( AstroTools.tableId ) {// bad code ( I'm trying to untie from fixed name )
 			table = new Table( AstroTools.tableId );
 			AstroTools.table = table;
+			table.SAMPConnection = SAMPConnection;
 			table.makeSortable();
+			table.enableCoordinatesHandler();
+			table.enableRowHighlighting();
 		}
 		if ( table ) {
 			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
@@ -170,6 +172,7 @@ var AstroTools = (function() {
 				session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
 			}
 		}
+		UI.VOMode('on');
 	}
 
 	function onHubCheck( result ) {
@@ -240,53 +243,27 @@ var AstroTools = (function() {
 
 	// Table class
 	function Table( tableId ) {
-		var that = this;
 		var $table = $( document.getElementById(tableId) );
 		if ( ! $table.length ) return;
-
 		this.$table = $table;
-		this.id = $table.attr('data-vo-table-id');
+		this.id   = $table.attr('data-vo-table-id');
 		this.name = $table.attr('data-vo-table-name');
-		this.url = absolutizeURL( $table.attr('data-vo-table-url') );
+		this.url  = absolutizeURL( $table.attr('data-vo-table-url') );
 
+		return this;
+	}
 
-		//TODO move this to prototype?
-		this.broadcast = function() {
-			// broadcast table to others
-			var params = { 'url': this.url };
-			if ( this.id ) params['table-id'] = $table.attr('data-vo-table-id');
-			if ( this.name ) params['name'] = $table.attr('data-vo-table-name');
+	Table.prototype.disableCoordinatesHandler = function() {
+		this.$table.off('click', '.at-table-cell-coords');
+		this.$table.find('.at-table-cell-coords').removeClass('at-table-cell-coords');
+	}
 
-  	  var message = new samp.Message('table.load.votable', params);
-		  SAMPConnection.notifyAll([message]);
-		}
-
-
-		//TODO move this to function and call only with connection
-		// table row highlighting send
-		$table.on( 'mouseover', 'tbody tr', function() {
-			$(this).addClass('at-table-row-highlighted');
-			var message = new samp.Message('table.highlight.row', {
-				'table-id': that.id,
-				'url': that.url,
-				'row': this.getAttribute('data-index').toString()
-			});
-		  SAMPConnection.notifyAll([message]);
-		});
-
-		$table.on( 'mouseout', 'tbody tr', function() {
-			$(this).removeClass('at-table-row-highlighted');
-		});
-
-		// table row highlighting receive
-		ClientTracker.callHandler['table.highlight.row'] = function(senderId, message, isCall) {
-			var $row = $table.find('tr[data-index="' + message['samp.params']['row'] +'"]');
-			$table.find('.at-table-row-highlighted').removeClass('at-table-row-highlighted');
-			$row.addClass('at-table-row-highlighted');
-			window.scrollTo( 0, $row.position().top );
-		};
-
+	Table.prototype.enableCoordinatesHandler = function() {
 		// coordinate columns init
+		var
+			$table = this.$table,
+			that = this;
+
 		$table.find('col.coords').each( function() {
 			var i = $(this).index();
 			$table.find('tr').find('td:nth('+i+')').addClass('at-table-cell-coords');
@@ -305,7 +282,8 @@ var AstroTools = (function() {
 			message = new samp.Message('script.aladin.send', {
 					'script': aladinScript
 			});
-		  SAMPConnection.notifyAll([message]);
+	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
+		  	that.SAMPConnection.notifyAll([message]);
 
 			// sending to others
       var
@@ -316,69 +294,124 @@ var AstroTools = (function() {
 				'ra': ra.toString(),
 				'dec': dec.toString()
 			});
-		  SAMPConnection.notifyAll([message]);
+	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
+		  	that.SAMPConnection.notifyAll([message]);
+		});
+	}
+
+	Table.prototype.disableRowHighlighting = function() {
+		this.$table.off( 'mouseover', 'tbody tr' );
+		this.$table.off( 'mouseout',  'tbody tr' );
+		delete ClientTracker.callHandler['table.highlight.row'];
+	}
+
+	Table.prototype.enableRowHighlighting = function() {
+		var that = this;
+		// table row highlighting send
+		that.$table.on( 'mouseover', 'tbody tr', function() {
+			$(this).addClass('at-table-row-highlighted');
+			var message = new samp.Message('table.highlight.row', {
+				'table-id': that.id,
+				'url': that.url,
+				'row': this.getAttribute('data-index').toString()
+			});
+	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
+		  	that.SAMPConnection.notifyAll([message]);
 		});
 
-		//TODO move this to prototype?
-		this.makeSortable = function() {
-			$table.on('click', 'thead th', function() {
-				var
-					$rows = $table.find('tbody tr'),
-					index = $(this).index(),
-					rowSorters = {};
-				
-				rowSorters['string'] = function( rowA, rowB ) {
-					var
-						a = rowA.children[index].textContent.trim().toLowerCase(),
-						b = rowB.children[index].textContent.trim().toLowerCase();
-					if ( a > b ) return 1;
-					if ( a < b ) return -1;
-					if ( a == b ) return 0;
-				};
-				rowSorters['numerical'] = function( rowA, rowB ) {
-					var
-						a = rowA.children[index].textContent,
-						b = rowB.children[index].textContent;
-					return a-b;
-				};
-				rowSorters['sexagesimal'] = function( rowA, rowB ) {
-					var
-						a = rowA.children[index].textContent.trim().replace(/^([0-9])/, '+$1'),
-						b = rowB.children[index].textContent.trim().replace(/^([0-9])/, '+$1'),
-						firstA = a.substr(0,1),
-						firstB = b.substr(0,1);
-					 
-					// because '+' < '-'
-					if ( firstA < firstB ) return 1;
-					if ( firstA > firstB ) return -1;
-					if ( firstA == '+' ) {
-						if ( a > b ) return 1;
-						if ( a < b ) return -1;
-						if ( a == b ) return 0;
-					}
-					// negative numbers
-					else {
-						if ( a > b ) return -1;
-						if ( a < b ) return 1;
-						if ( a == b ) return 0;
-					}
-				}
-				// if column is already sorted just reverse it
-				if ( $(this).hasClass('at-table-column-sorted') ) {
-					$table.append( $rows.detach().toArray().reverse() );
-					$(this).find('.at-sort-icon').toggle();
-				}
-				else {
-					$table.find('thead th.at-table-column-sorted')
-						.removeClass('at-table-column-sorted')
-						.find('.at-sort-icon').remove();
-					$table.append( $rows.detach().toArray().sort( rowSorters[this.getAttribute('data-type')||'numerical'] ));
-					$(this).addClass('at-table-column-sorted').append('<span class="at-sort-icon at-sort-icon-asc">&nbsp;Asc&nbsp;</span><span class="at-sort-icon at-sort-icon-desc" style="display:none">&nbsp;Desc&nbsp;</span>');
-				}
-			});
-		};
+		that.$table.on( 'mouseout', 'tbody tr', function() {
+			$(this).removeClass('at-table-row-highlighted');
+		});
 
-		return this;
+		// table row highlighting receive
+		ClientTracker.callHandler['table.highlight.row'] = function(senderId, message, isCall) {
+			var $row = that.$table.find('tr[data-index="' + message['samp.params']['row'] +'"]');
+			that.$table.find('.at-table-row-highlighted').removeClass('at-table-row-highlighted');
+			$row.addClass('at-table-row-highlighted');
+			window.scrollTo( 0, $row.position().top );
+		};
+	}
+
+	Table.prototype.makeSortable = function() {
+		var that = this;
+		that.$table.on('click', 'thead th', function() {
+			var
+				$rows = that.$table.find('tbody tr'),
+				cellIndex = $(this).index(),
+				rowSorters = {};
+			
+			// if column is already sorted just reverse it
+			if ( $(this).hasClass('at-table-column-sorted') ) {
+				that.$table.append( $rows.detach().toArray().reverse() );
+				$(this).find('.at-sort-icon').toggle();
+			}
+			else {
+				that.$table.find('thead th.at-table-column-sorted')
+					.removeClass('at-table-column-sorted')
+					.find('.at-sort-icon').remove();
+				var sorter = that.rowSorters[this.getAttribute('data-type')||'numerical']( cellIndex );
+				that.$table.append( $rows.detach().toArray().sort( sorter ) );
+				$(this).addClass('at-table-column-sorted').append('<span class="at-sort-icon at-sort-icon-asc">&nbsp;Asc&nbsp;</span><span class="at-sort-icon at-sort-icon-desc" style="display:none">&nbsp;Desc&nbsp;</span>');
+			}
+		});
+	};
+
+	Table.prototype.rowSorters = {};
+
+	Table.prototype.rowSorters['string'] = function( cellIndex ) {
+		return function( rowA, rowB ) {
+			var
+				a = rowA.children[cellIndex].textContent.trim().toLowerCase(),
+				b = rowB.children[cellIndex].textContent.trim().toLowerCase();
+			if ( a > b ) return 1;
+			if ( a < b ) return -1;
+			if ( a == b ) return 0;
+		}
+	};
+
+	Table.prototype.rowSorters['numerical'] = function( cellIndex ) {
+		return function( rowA, rowB ) {
+			var
+				a = rowA.children[cellIndex].textContent,
+				b = rowB.children[cellIndex].textContent;
+			return a-b;
+		}
+	};
+
+	Table.prototype.rowSorters['sexagesimal'] = function( cellIndex ) {
+		return function( rowA, rowB ) {
+			var
+				a = rowA.children[cellIndex].textContent.trim().replace(/^([0-9])/, '+$1'),
+				b = rowB.children[cellIndex].textContent.trim().replace(/^([0-9])/, '+$1'),
+				firstA = a.substr(0,1),
+				firstB = b.substr(0,1);
+		 
+			// because '+' < '-'
+			if ( firstA < firstB ) return 1;
+			if ( firstA > firstB ) return -1;
+			if ( firstA == '+' ) {
+				if ( a > b ) return 1;
+				if ( a < b ) return -1;
+				if ( a == b ) return 0;
+			}
+			// negative numbers
+			else {
+				if ( a > b ) return -1;
+				if ( a < b ) return 1;
+				if ( a == b ) return 0;
+			}
+		}
+	}
+
+	Table.prototype.broadcast = function() {
+		// broadcast table to others
+		var params = { 'url': this.url };
+		if ( this.id   ) params['table-id'] = this.id;
+		if ( this.name ) params['name']     = this.name;
+
+    var message = new samp.Message('table.load.votable', params);
+	  if ( this.SAMPConnection instanceof samp.Connection && ! this.SAMPConnection.closed ) 
+			this.SAMPConnection.notifyAll([message]);
 	}
 
 	function absolutizeURL( url ) {
@@ -396,6 +429,7 @@ var AstroTools = (function() {
 	return {
 		init: init,
 		Table: Table,
-		Utils: { 'absolutizeURL': absolutizeURL, 'sexaToDec': sexaToDec }
+		Utils: { 'absolutizeURL': absolutizeURL, 'sexaToDec': sexaToDec },
+		ClientTracker: ClientTracker
 	}
 })();
