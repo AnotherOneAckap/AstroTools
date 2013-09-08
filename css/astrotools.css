@@ -1,11 +1,17 @@
 #astrotools-ui-container {
-	position: absolute;
+	position: fixed;
 	z-index: 9999;
 	right: 0;
 	top: 0;
-	background-color: cyan;
+  background: #ddf;
+  opacity: .7;
 	width: 15%;
 	padding: .5em 2em;
+	font-family: 'Trebuchet MS', Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+#astrotools-ui-container:hover {
+	opacity:1;
 }
 
 #astrotools-client-list {
