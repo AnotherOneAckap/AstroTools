@@ -5,13 +5,14 @@
 	top: 0;
   background: #ddf;
   opacity: .7;
-	width: 15%;
-	padding: .5em 2em;
+	width: 114px;
+	padding: .5em 1em;
 	font-family: 'Trebuchet MS', Tahoma, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
 #astrotools-ui-container:hover {
 	opacity:1;
+	transition: all 500ms linear;
 }
 
 #astrotools-client-list {
