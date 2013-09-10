@@ -85,7 +85,7 @@ var AstroTools = (function() {
 	}
 
 	function makeLinksBroadcastable() {
-		$('.vo-table-link').on( 'mouseover', function() {
+		$('.at-table-link').on( 'mouseover', function() {
 			if ( ! SAMPConnection || SAMPConnection.closed ) return;
 			var $link = $(this);
 			if ( $link.next('.vo-broadcast-button').length ) return;
