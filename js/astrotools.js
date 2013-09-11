@@ -76,11 +76,17 @@ var AstroTools = (function() {
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
 
+		makeLinksBroadcastable();
+
+		if ( this.tableId && $('#'+this.tableId).length ) {
+			table = new Table( this.tableId );
+			AstroTools.table = table;
+			table.makeSortable();
+		}
+
 		//NB can we check session for previous connection and re-use it?
 		if ( session.get('at-vo-mode') == 1 ) connect();
 		
-		makeLinksBroadcastable();
-
 		AstroTools.isStarted = true;
 	}
 
@@ -101,8 +107,7 @@ var AstroTools = (function() {
 			});
 		});
 
-		$('.vo-table-link').on( 'mouseout', function(e) {
-			console.log(e);
+		$('.at-table-link').on( 'mouseout', function(e) {
 			var $button = $(this).next('.vo-broadcast-button');
 			if ( $(e.relatedTarget) == $button ) {
 			    return false;
@@ -156,15 +161,10 @@ var AstroTools = (function() {
 		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
 		session.set( 'at-private-key', SAMPConnection.regInfo['samp.private-key'] );
 
-		if ( AstroTools.tableId ) {// bad code ( I'm trying to untie from fixed name )
-			table = new Table( AstroTools.tableId );
-			AstroTools.table = table;
+		if ( table ) {
 			table.SAMPConnection = SAMPConnection;
-			table.makeSortable();
 			table.enableCoordinatesHandler();
 			table.enableRowHighlighting();
-		}
-		if ( table ) {
 			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
 			if ( ! broadcastedTables[ table.id ] ) {
 				table.broadcast();
