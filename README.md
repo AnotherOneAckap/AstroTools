@@ -24,6 +24,16 @@ After document is loaded, you can configure and start Astrotools just like this
 		});
 	</script>
 
+Startup options
+===============
+
+You can pass options object to initialization function:
+
+	AstroTools.init({ iconUrl: '/media/images/icon.png });
+
++ _iconUrl_ absolute or relative path to client icon to display in hub window
++ _defaultHubUrl_ absolute or relative path to default hub ( .jnlp file to load and launch )
+
 Features
 ========
 

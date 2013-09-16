@@ -4,6 +4,7 @@ var AstroTools = (function() {
 	var waitingForHub;
 	var isHubOnlineInterval;
 	var defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp';
+	var iconUrl = 'img/icon.png';
 	var table;
 
 	var UI = {
@@ -72,6 +73,7 @@ var AstroTools = (function() {
 		if ( AstroTools.isStarted ) return undefined;
 		
 		defaultHubUrl = options instanceof Object ? options['defaultHubUrl'] : defaultHubUrl;
+		iconUrl  = options instanceof Object ? options['iconUrl'] : iconUrl;
 		UI.init();
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
@@ -186,7 +188,7 @@ var AstroTools = (function() {
 		SAMPConnection.declareMetadata([{
 			'samp.name': 'AstroTools',
 			'samp.description': 'Simple toolbox',
-			'samp.icon.url': ( location.href.substr(-1) == '/' ? location.href : location.href.replace( /[^/]+$/, '' ) ) + 'img/icon.png'
+			'samp.icon.url': absolutizeURL( iconUrl )
 		}], noop, onError );
 	}
 
@@ -197,7 +199,7 @@ var AstroTools = (function() {
 			return;
 		}
 		// launch defined samp hub through jnlp
-		$('<iframe>', {frameborder: 0,src: defaultHubUrl, style: 'width:0; height:0;'}).appendTo('body');
+		$('<iframe>', {frameborder: 0,src: absolutizeURL( defaultHubUrl ), style: 'width:0; height:0;'}).appendTo('body');
 		waitingForHub = setInterval(function() {samp.ping( onPingResult );}, 5000);
 	}
 
@@ -418,7 +420,7 @@ var AstroTools = (function() {
 		// url may be already full
 		// url may be path relative host root (href="/foo")
 		// else it's path relative current location (href="bar")
-		return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'') + url;
+		return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'/') + url;
 	}
 
   function sexaToDec(sexa) {
