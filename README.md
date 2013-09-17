@@ -15,6 +15,14 @@ Then astrotools library itself:
 
 	<script type="text/javascript" src="js/astrotools.js"></script>
 
+And do not forget css file ( which you can customize )
+
+	<head>
+		...
+		<link rel="stylesheet" href="css/astrotools.css" />
+		...
+	</head>
+
 After document is loaded, you can configure and start Astrotools just like this
 
 	<script type="text/javascript">
@@ -23,6 +31,7 @@ After document is loaded, you can configure and start Astrotools just like this
 			AstroTools.init();
 		});
 	</script>
+
 
 Startup options
 ===============
