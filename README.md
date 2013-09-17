@@ -42,6 +42,12 @@ You can pass options object to initialization function:
 
 + _iconUrl_ absolute or relative path to client icon to display in hub window
 + _defaultHubUrl_ absolute or relative path to default hub ( .jnlp file to load and launch )
++ _tableOptions_  object which passed to Table constructor options argument 
+
+e.g. customizing table headings sort icons
+
+	var tOptions = { sortIcon: { asc: '<img src="up.png"/>', desc: '<img src="down.png"/>' } };
+	AstroTools.init({ tableOptions: tOptions })
 
 Features
 ========
@@ -49,9 +55,14 @@ Features
 Table class
 -----------
 
-	var t = new AstroTools.Table()
+	var t = new AstroTools.Table( tableId, options )
 
 makes possible to add sorting, row highlighting and point at coordinates through SAMP connection.
+
+Options
+-------
+
++ _sortIcon_ Object with keys _asc_ and _desc_, used for indicate sorting in table headings.
 
 For example, you have table
 
@@ -73,7 +84,7 @@ Column sorting feature
 
 allows to sort columns by clicking on column headings, markup you need for this:
 
-1. Table headings must be in th tags, with possible attribute data-type ( valid values are 'string', 'numerical', 'sexagesimal' ), used for sorting ( default assuming that column has 'numerical' data-type )
+1. Table headings must be in th tags, with possible attribute data-type ( valid values are 'string', 'numerical', 'sexagesimal', 'astronomical-object-name' ), used for sorting ( default assuming that column has 'numerical' data-type )
 
 Row highlighting feature
 ------------------------

@@ -72,8 +72,13 @@ var AstroTools = (function() {
 	function init( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
-		defaultHubUrl = options instanceof Object ? options['defaultHubUrl'] : defaultHubUrl;
-		iconUrl  = options instanceof Object ? options['iconUrl'] : iconUrl;
+		var tableOptions;
+		if ( options instanceof Object ) {
+			defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
+			iconUrl       = options['iconUrl']       || iconUrl;
+			tableOptions  = options['tableOptions']  || {};
+		}
+
 		UI.init();
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
@@ -81,7 +86,7 @@ var AstroTools = (function() {
 		makeLinksBroadcastable();
 
 		if ( this.tableId && $('#'+this.tableId).length ) {
-			table = new Table( this.tableId );
+			table = new Table( this.tableId, tableOptions );
 			AstroTools.table = table;
 			table.makeSortable();
 		}
@@ -244,7 +249,7 @@ var AstroTools = (function() {
   };
 
 	// Table class
-	function Table( tableId ) {
+	function Table( tableId, options ) {
 		var $table = $( document.getElementById(tableId) );
 		if ( ! $table.length ) return;
 		this.$table = $table;
@@ -252,8 +257,15 @@ var AstroTools = (function() {
 		this.name = $table.attr('data-vo-table-name');
 		this.url  = absolutizeURL( $table.attr('data-vo-table-url') );
 
+		if ( options instanceof Object ) {
+			this.sortIcon.asc = options['sortIcon']['asc'] || this.sortIcon.asc;
+			this.sortIcon.desc = options['sortIcon']['desc'] ||this.sortIcon.desc;
+		}
+
 		return this;
 	}
+
+	Table.prototype.sortIcon = { 'asc': '&#9650;', 'desc': '&#9660;' };
 
 	Table.prototype.disableCoordinatesHandler = function() {
 		this.$table.off('click', '.at-table-cell-coords');
@@ -336,6 +348,7 @@ var AstroTools = (function() {
 
 	Table.prototype.makeSortable = function() {
 		var that = this;
+		that.$table.find('thead th').css('cursor', 'pointer');
 		that.$table.on('click', 'thead th', function() {
 			var
 				$rows = that.$table.find('tbody tr'),
@@ -353,7 +366,7 @@ var AstroTools = (function() {
 					.find('.at-sort-icon').remove();
 				var sorter = that.rowSorters[this.getAttribute('data-type')||'numerical']( cellIndex );
 				that.$table.append( $rows.detach().toArray().sort( sorter ) );
-				$(this).addClass('at-table-column-sorted').append('<span class="at-sort-icon at-sort-icon-asc">&nbsp;Asc&nbsp;</span><span class="at-sort-icon at-sort-icon-desc" style="display:none">&nbsp;Desc&nbsp;</span>');
+				$(this).addClass('at-table-column-sorted').append('<span class="at-sort-icon at-sort-icon-asc">&nbsp;' + that.sortIcon.asc + '&nbsp;</span><span class="at-sort-icon at-sort-icon-desc" style="display:none">&nbsp;' + that.sortIcon.desc + '&nbsp;</span>');
 			}
 		});
 	};
@@ -404,6 +417,43 @@ var AstroTools = (function() {
 			}
 		}
 	}
+
+	Table.prototype.rowSorters['astronomical-object-name'] = function( cellIndex ) {
+		return function( rowA, rowB ) {
+			var
+				wordsA = rowA.children[cellIndex].textContent.split(/\s+/),
+				wordsB = rowB.children[cellIndex].textContent.split(/\s+/),
+				i = 0,
+				result = undefined;
+
+			while ( result == undefined ) {
+				if ( wordsA[i] == undefined && wordsB[i] != undefined ) {
+					result = -1;
+				}
+				if ( wordsB[i] == undefined && wordsA[i] != undefined ) {
+					result = 1;
+				}
+				if ( wordsB[i] == undefined && wordsA[i] == undefined ) {
+					result = 0;
+				}
+				if ( wordsA[i] == wordsB[i] ) {
+					i++;
+					continue;
+				}
+				// if current words are number, compare them
+				if ( wordsA[i]-0 == wordsA[i] && wordsB[i]-0 == wordsB[i] ) {
+					result = wordsA[i] - wordsB[i];
+				}
+				else {
+					// else strings comparision
+					if ( wordsA[i] > wordsB[i] ) result = 1;
+					if ( wordsA[i] < wordsB[i] ) result = -1;
+				}
+			}
+
+			return result;
+		}
+	};
 
 	Table.prototype.broadcast = function() {
 		// broadcast table to others
