@@ -1,11 +1,13 @@
 var AstroTools = (function() {
-	var SAMPConnection;
-	var ClientTracker;
-	var waitingForHub;
-	var isHubOnlineInterval;
-	var defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp';
-	var iconUrl = 'img/icon.png';
-	var table;
+	var
+		SAMPConnection,
+		ClientTracker,
+		waitingForHub,
+		isHubOnlineInterval,
+		defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp',
+		iconUrl = 'img/icon.png',
+		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
+		table;
 
 	var UI = {
 		init: function() {
@@ -77,6 +79,7 @@ var AstroTools = (function() {
 			defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
 			iconUrl       = options['iconUrl']       || iconUrl;
 			tableOptions  = options['tableOptions']  || {};
+			aladinScript  = options['aladinScript']  || aladinScript;
 		}
 
 		UI.init();
@@ -286,15 +289,16 @@ var AstroTools = (function() {
 		$table.on('click', '.at-table-cell-coords', function() {
 			var
 				$row = $(this).parent(),
-				aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
+				script,
 				message;
 			
 			// sending to Aladin
-			aladinScript = aladinScript.replace( /#{coords}/g, $row.attr('data-coords') )
+			// possible feature: allow any placeholder and replace it with appropriate data- attr
+			script = aladinScript.replace( /#{coords}/g, $row.attr('data-coords') )
 				.replace(/#{name}/g,   $row.attr('data-name')   )
 				.replace(/#{radius}/g, $row.attr('data-radius') );
 			message = new samp.Message('script.aladin.send', {
-					'script': aladinScript
+					'script': script
 			});
 	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
 		  	that.SAMPConnection.notifyAll([message]);
@@ -304,7 +308,7 @@ var AstroTools = (function() {
 				coords = $row.attr('data-coords').split(' '),
       	ra  = sexaToDec(coords[0]),
       	dec = sexaToDec(coords[1]);
-			message = new samp.Message('coords.pointAt.sky', {
+			message = new samp.Message('coord.pointAt.sky', {
 				'ra': ra.toString(),
 				'dec': dec.toString()
 			});

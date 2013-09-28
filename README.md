@@ -43,6 +43,11 @@ You can pass options object to initialization function:
 + _iconUrl_ absolute or relative path to client icon to display in hub window
 + _defaultHubUrl_ absolute or relative path to default hub ( .jnlp file to load and launch )
 + _tableOptions_  object which passed to Table constructor options argument 
++ _aladinScript_  an aladin script which will be send by [coordinate cell handler](#coordinate-cell-handler), default is
+
+	get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red
+
+where #{coords}, #{name} and #{radius} are placeholders.
 
 e.g. customizing table headings sort icons
 
@@ -94,6 +99,8 @@ also receives such messages and shows selected rows.
 To make it work you need:
 
 1. Every row ( tr tag ) must have data-index attribute
+
+<a name="coordinate-cell-handler" href="#coordinate-cell-handler"></a>
 
 Coordinate cell handler
 -----------------------
