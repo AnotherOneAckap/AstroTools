@@ -393,7 +393,10 @@ var AstroTools = (function() {
 			var
 				a = rowA.children[cellIndex].textContent,
 				b = rowB.children[cellIndex].textContent;
-			return a-b;
+
+			a = parseFloat( a ) || Number.NEGATIVE_INFINITY;
+			b = parseFloat( b ) || Number.NEGATIVE_INFINITY;
+			return a - b;
 		}
 	};
 
