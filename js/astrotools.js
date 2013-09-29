@@ -74,32 +74,30 @@ var AstroTools = (function() {
 	function init( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
-		$(document).on('ready', function() {
-			var tableOptions;
-			if ( options instanceof Object ) {
-				defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
-				iconUrl       = options['iconUrl']       || iconUrl;
-				tableOptions  = options['tableOptions']  || {};
-				aladinScript  = options['aladinScript']  || aladinScript;
-			}
+		var tableOptions;
+		if ( options instanceof Object ) {
+			defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
+			iconUrl       = options['iconUrl']       || iconUrl;
+			tableOptions  = options['tableOptions']  || {};
+			aladinScript  = options['aladinScript']  || aladinScript;
+		}
 
-			UI.init();
-			// if we store private-key on cookies we no need anymore to disconnect on unload
-			// $(window).unload( disconnect );
+		UI.init();
+		// if we store private-key on cookies we no need anymore to disconnect on unload
+		// $(window).unload( disconnect );
 
-			makeLinksBroadcastable();
+		makeLinksBroadcastable();
 
-			if ( this.tableId && $('#'+this.tableId).length ) {
-				table = new Table( this.tableId, tableOptions );
-				AstroTools.table = table;
-				table.makeSortable();
-			}
+		if ( this.tableId && $('#'+this.tableId).length ) {
+			table = new Table( this.tableId, tableOptions );
+			AstroTools.table = table;
+			table.makeSortable();
+		}
 
-			//NB can we check session for previous connection and re-use it?
-			if ( session.get('at-vo-mode') == 1 ) connect();
-			
-			AstroTools.isStarted = true;
-		});
+		//NB can we check session for previous connection and re-use it?
+		if ( session.get('at-vo-mode') == 1 ) connect();
+		
+		AstroTools.isStarted = true;
 	}
 
 	function makeLinksBroadcastable() {
