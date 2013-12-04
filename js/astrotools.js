@@ -88,9 +88,15 @@ var AstroTools = (function() {
 			$VOMenu.html('');
 			$.each( VOMenu, function( k, item ) {
 				if ( UI.clientNames[ item.name ] ) return;
-				$VOMenu.append(
-					$('<li>').prepend( $('<a>', { target: '_blank', href: item.link, text: item.title } ).on( 'click', function() { $(this).remove() } ) )
-				);
+				var
+					$link = $('<a>', { target: '_blank', href: item.link, text: item.title } ),
+					$li = $('<li>').prepend( $link );
+				$li.on( 'click', function() {
+					var $that = $(this);
+					$that.html('Waiting...'); 
+					setTimeout( function() { $that.html( $link ) }, 5000 );
+				});
+				$VOMenu.append(	$li );
 			});
 		}
 	}
