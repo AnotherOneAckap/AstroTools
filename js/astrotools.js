@@ -2,7 +2,7 @@ var AstroTools = (function() {
 	var
 		SAMPConnection,
 		ClientTracker,
-		waitingForHub,
+		waitingForHubInterval,
 		isHubOnlineInterval,
 		defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp',
 		iconUrl = 'img/icon.png',
@@ -89,7 +89,7 @@ var AstroTools = (function() {
 			$.each( VOMenu, function( k, item ) {
 				if ( UI.clientNames[ item.name ] ) return;
 				var
-					$link = $('<a>', { target: '_blank', href: item.link, text: item.title } ),
+					$link = $('<a>', { href: "javascript:window.location='"+item.link+"'", text: item.title } ),
 					$li = $('<li>').prepend( $link );
 				$li.on( 'click', function() {
 					var $that = $(this);
@@ -190,6 +190,8 @@ var AstroTools = (function() {
 		SAMPConnection = undefined;
 		UI.clearClientList();
 		UI.VOMode('off');
+		if ( isHubOnlineInterval ) clearInterval( isHubOnlineInterval );
+		if ( waitingForHubInterval ) clearInterval( waitingForHubInterval );
 	}
 
 	function onConnect( connection ) {
@@ -217,10 +219,7 @@ var AstroTools = (function() {
 	}
 
 	function onHubCheck( result ) {
-		if ( ! result ) {
-			disconnect();
-			clearInterval( isHubOnlineInterval );
-		}
+		if ( ! result ) disconnect()
 	}
 
 	function declareMetadata() {
@@ -238,14 +237,14 @@ var AstroTools = (function() {
 			return;
 		}
 		// launch defined samp hub through jnlp
-		$('<iframe>', {frameborder: 0,src: absolutizeURL( defaultHubUrl ), style: 'width:0; height:0;'}).appendTo('body');
-		waitingForHub = setInterval(function() {samp.ping( onPingResult );}, 5000);
+		document.location = absolutizeURL( defaultHubUrl );
+		waitingForHubInterval = setInterval(function() {samp.ping( onPingResult );}, 5000);
 	}
 
 	function onPingResult( pingResult ) {
 		if ( pingResult == true ) {
 			connect();
-			clearInterval( waitingForHub );
+			clearInterval( waitingForHubInterval );
 		}
 		else {
 		//TODO append timeout handling?
@@ -351,7 +350,7 @@ var AstroTools = (function() {
 	Table.prototype.disableRowHighlighting = function() {
 		this.$table.off( 'mouseover', 'tbody tr' );
 		this.$table.off( 'mouseout',  'tbody tr' );
-		delete ClientTracker.callHandler['table.highlight.row'];
+		if ( ClientTracker ) delete ClientTracker.callHandler['table.highlight.row'];
 	}
 
 	Table.prototype.enableRowHighlighting = function() {
