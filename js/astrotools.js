@@ -2,16 +2,22 @@ var AstroTools = (function() {
 	var
 		SAMPConnection,
 		ClientTracker,
-		waitingForHub,
+		waitingForHubInterval,
 		isHubOnlineInterval,
 		defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp',
 		iconUrl = 'img/icon.png',
 		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
-		table;
+		table,
+		VOMenu = [
+			{ name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=aladin.jnlp' },
+			{ name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
+		];
 
 	var UI = {
+		clientNames: {},
 		init: function() {
-			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul></div>');
+			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul><ul id="astrotools-vo-menu"></ul></div>');
+			UI.updateVOMenu();
 			if ( SAMPConnection ) {
 				UI.VOMode('on');
 			}
@@ -57,17 +63,41 @@ var AstroTools = (function() {
 			}
 		},
 		updateClientList: function() {
-			$('#astrotools-client-list').html('');
+			var
+				$clientList = $('#astrotools-client-list');
+
+			UI.clientNames = {};
+			$clientList.html('');
 			$.each( ClientTracker.metas, function( id, meta ) {
+				if ( meta['samp.name'] ) UI.clientNames[ meta['samp.name'].toLowerCase() ] = 1;
 				if ( meta['samp.name'] && id != 'hub' && meta['samp.name'] != 'AstroTools' ) {
-					$('#astrotools-client-list').append(
+					$clientList.append(
 						 $('<li>', { text: meta['samp.name'], title: meta['samp.description.text'] } ).prepend( $('<img>', { src: meta['samp.icon.url'] } ) )
 					);
 				}
 			});
+			UI.updateVOMenu();
 		},
 		clearClientList: function() {
 			$('#astrotools-client-list').html('');
+		},
+		updateVOMenu: function() {
+			var
+				$VOMenu = $('#astrotools-vo-menu');
+
+			$VOMenu.html('');
+			$.each( VOMenu, function( k, item ) {
+				if ( UI.clientNames[ item.name ] ) return;
+				var
+					$link = $('<a>', { href: "javascript:window.location='"+item.link+"'", text: item.title } ),
+					$li = $('<li>').prepend( $link );
+				$li.on( 'click', function() {
+					var $that = $(this);
+					$that.html('Waiting...'); 
+					setTimeout( function() { $that.html( $link ) }, 5000 );
+				});
+				$VOMenu.append(	$li );
+			});
 		}
 	}
 
@@ -80,6 +110,7 @@ var AstroTools = (function() {
 			iconUrl       = options['iconUrl']       || iconUrl;
 			tableOptions  = options['tableOptions']  || {};
 			aladinScript  = options['aladinScript']  || aladinScript;
+			VOMenu        = options['VOMenu']        || VOMenu;
 		}
 
 		UI.init();
@@ -159,6 +190,8 @@ var AstroTools = (function() {
 		SAMPConnection = undefined;
 		UI.clearClientList();
 		UI.VOMode('off');
+		if ( isHubOnlineInterval ) clearInterval( isHubOnlineInterval );
+		if ( waitingForHubInterval ) clearInterval( waitingForHubInterval );
 	}
 
 	function onConnect( connection ) {
@@ -186,10 +219,7 @@ var AstroTools = (function() {
 	}
 
 	function onHubCheck( result ) {
-		if ( ! result ) {
-			disconnect();
-			clearInterval( isHubOnlineInterval );
-		}
+		if ( ! result ) disconnect()
 	}
 
 	function declareMetadata() {
@@ -207,14 +237,14 @@ var AstroTools = (function() {
 			return;
 		}
 		// launch defined samp hub through jnlp
-		$('<iframe>', {frameborder: 0,src: absolutizeURL( defaultHubUrl ), style: 'width:0; height:0;'}).appendTo('body');
-		waitingForHub = setInterval(function() {samp.ping( onPingResult );}, 5000);
+		document.location = absolutizeURL( defaultHubUrl );
+		waitingForHubInterval = setInterval(function() {samp.ping( onPingResult );}, 5000);
 	}
 
 	function onPingResult( pingResult ) {
 		if ( pingResult == true ) {
 			connect();
-			clearInterval( waitingForHub );
+			clearInterval( waitingForHubInterval );
 		}
 		else {
 		//TODO append timeout handling?
@@ -320,7 +350,7 @@ var AstroTools = (function() {
 	Table.prototype.disableRowHighlighting = function() {
 		this.$table.off( 'mouseover', 'tbody tr' );
 		this.$table.off( 'mouseout',  'tbody tr' );
-		delete ClientTracker.callHandler['table.highlight.row'];
+		if ( ClientTracker ) delete ClientTracker.callHandler['table.highlight.row'];
 	}
 
 	Table.prototype.enableRowHighlighting = function() {
@@ -489,6 +519,7 @@ var AstroTools = (function() {
 		init: init,
 		Table: Table,
 		Utils: { 'absolutizeURL': absolutizeURL, 'sexaToDec': sexaToDec },
-		ClientTracker: ClientTracker
+		ClientTracker: ClientTracker,
+		VOMenu: VOMenu
 	}
 })();

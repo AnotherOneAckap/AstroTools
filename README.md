@@ -43,7 +43,15 @@ You can pass options object to initialization function:
 + _iconUrl_ absolute or relative path to client icon to display in hub window
 + _defaultHubUrl_ absolute or relative path to default hub ( .jnlp file to load and launch )
 + _tableOptions_  object which passed to Table constructor options argument 
++ _VOMenu_  a list of launchers shown in AstroTools panel, default is
+
+	[
+    { name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=aladin.jnlp' },
+    { name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
+	]
+
 + _aladinScript_  an aladin script which will be send by [coordinate cell handler](#coordinate-cell-handler), default is
+
 
 	get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red
 
