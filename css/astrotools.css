@@ -15,6 +15,10 @@
 	transition: all 500ms linear;
 }
 
+#astrotools-vo-menu {
+	list-style: none;
+}
+
 #astrotools-client-list {
 	list-style: none;
 }
