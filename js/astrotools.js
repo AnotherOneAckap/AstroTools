@@ -336,8 +336,8 @@ var AstroTools = (function() {
 			// sending to others
       var
 				coords = $row.attr('data-coords').split(' '),
-      	ra  = sexaToDec(coords[0]),
-      	dec = sexaToDec(coords[1]);
+      	ra  = coords[0],
+      	dec = coords[1];
 			message = new samp.Message('coord.pointAt.sky', {
 				'ra': ra.toString(),
 				'dec': dec.toString()
