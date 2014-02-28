@@ -4,7 +4,7 @@ var AstroTools = (function() {
 		ClientTracker,
 		waitingForHubInterval,
 		isHubOnlineInterval,
-		defaultHubUrl = 'http://www.starlink.ac.uk/topcat/topcat-lite.jnlp',
+		defaultHubUrl = 'topcat-lite.jnlp',
 		iconUrl = 'img/icon.png',
 		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
 		table,
@@ -177,6 +177,7 @@ var AstroTools = (function() {
 	}
 
 	function noop() {	}
+	function errorHandler( error ) { if ( window.console ) console.error( error ) }
 
 	function disconnect() {
 		if ( SAMPConnection ) {
@@ -225,8 +226,11 @@ var AstroTools = (function() {
 	function declareMetadata() {
 		SAMPConnection.declareMetadata([{
 			'samp.name': 'AstroTools',
-			'samp.description': 'Simple toolbox',
-			'samp.icon.url': absolutizeURL( iconUrl )
+			'samp.description.text': 'Simple toolbox',
+			'samp.icon.url': absolutizeURL( iconUrl ),
+			'home.page': 'https://github.com/AnotherOneAckap/AstroTools',
+			'author.name': 'Askar Timirgazin, Ivan Zolotukhin',
+			'author.email': 'anotheroneackap@gmail.com'
 		}], noop, onError );
 	}
 
@@ -331,7 +335,7 @@ var AstroTools = (function() {
 					'script': script
 			});
 	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
-		  	that.SAMPConnection.notifyAll([message]);
+		  	that.SAMPConnection.notifyAll( [message], noop, errorHandler );
 
 			// sending to others
       var
@@ -343,7 +347,7 @@ var AstroTools = (function() {
 				'dec': dec.toString()
 			});
 	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
-		  	that.SAMPConnection.notifyAll([message]);
+		  	that.SAMPConnection.notifyAll( [message], noop, errorHandler );
 		});
 	}
 

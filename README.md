@@ -55,12 +55,13 @@ You can pass options object to initialization function:
 
 	get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red
 
-where #{coords}, #{name} and #{radius} are placeholders.
+where #{coords}, #{name} and #{radius} are placeholders. IMPORTANT: To be able send scripts to aladin, you must use included in distribution jnlp file as default hub. JSAMP hub used in Topcat restricts by default unknown MTypes, so it is necessary to run it with -web:norestrictmtypes key.
 
 e.g. customizing table headings sort icons
 
 	var tOptions = { sortIcon: { asc: '<img src="up.png"/>', desc: '<img src="down.png"/>' } };
 	AstroTools.init({ tableOptions: tOptions })
+
 
 Features
 ========
@@ -165,3 +166,4 @@ Markup Example
 
 	<a class="at-table-link" data-vo-table-id="123456" href="http://andromeda.star.bris.ac.uk/data/messier.xml" data-vo-table-name="Exampe table">Table</a>
 
+Contact me anotheroneackap@gmail.com, if you still have a question.

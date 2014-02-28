@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<jnlp spec="1.0+" codebase="http://andromeda.star.bris.ac.uk/~mbt/topcat">
+  <information>
+    <title>TOPCAT</title>
+    <vendor>Mark Taylor, Bristol University, UK</vendor>
+    <homepage href="http://www.starlink.ac.uk/topcat/"/>
+    <description kind="one-line">"TOPCAT - lite version"</description>
+    <icon href="images/tc_sok.gif"/>
+    <offline-allowed/>
+    <!-- <shortcut online="false"><desktop/></shortcut> -->
+    <related-content href="sun253/index.html">
+      <title>SUN/253</title>
+      <description kind="one-line">Comprehensive user document</description>
+    </related-content>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+"/>
+    <jar href="topcat-lite.jar"/>
+  </resources>
+  <application-desc main-class="uk.ac.starlink.topcat.Driver">
+    <argument>-jsamp</argument>
+    <argument>hub</argument>
+    <argument>-web:norestrictmtypes</argument>
+  </application-desc>
+</jnlp>
