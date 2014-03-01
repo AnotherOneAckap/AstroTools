@@ -46,7 +46,7 @@ You can pass options object to initialization function:
 + _VOMenu_  a list of launchers shown in AstroTools panel, default is
 
 	[
-    { name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=aladin.jnlp' },
+    { name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=AladinBeta.jnlp' },
     { name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
 	]
 
