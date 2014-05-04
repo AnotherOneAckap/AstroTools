@@ -9,6 +9,7 @@ var AstroTools = (function() {
 		iconUrl = 'img/icon.png',
 		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
 		table,
+		_ui,
 		VOMenu = [
 			{ name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=AladinBeta.jnlp' },
 			{ name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
@@ -27,83 +28,87 @@ var AstroTools = (function() {
 		}
 	};
 
-	var UI = {
-		clientNames: {},
-		init: function ( params ) {
-			if ( params.appendToBody ) {
-				$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul><ul id="astrotools-vo-menu"></ul></div>');
-			};
-			UI.updateVOMenu();
-			if ( SAMPConnection ) {
-				UI.VOMode('on');
-			}
-			else {
-				UI.VOMode('off');
-			}
-		},
-		VOMode: function(mode) {
-			switch (mode) {
+	var UI = function ( params ) {
+
+		this.clientNames = {};
+
+		this.VOMode = function ( mode ) {
+			var state = 'off';
+			switch ( mode ) {
+
 				case 'on':
 					$('#astrotools-ui-container .vo-mode-indicator').text('on');
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { Session.set('at-vo-mode', '0'); disconnect(); } )
+						.on( 'click', params.disconnectCallback )
 						.removeAttr('disabled');
-					if ( table ) {
-						$('#astrotools-ui-container .button-rebroadcast-table').on('click', function() {
-							table.broadcast();
+					if ( params.table ) {
+						$('#astrotools-ui-container .button-rebroadcast-table').on( 'click', function () {
+							params.table.broadcast();
 						});
-						$('#astrotools-ui-container .button-rebroadcast-table .table-name').text(table.name);
+						$('#astrotools-ui-container .button-rebroadcast-table .table-name').text( params.table.name );
 						$('#astrotools-ui-container .button-rebroadcast-table').show();
 					}
+					state = mode;
 					break;
+
 				case 'connecting':
 					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					$('#astrotools-ui-container .vo-mode-indicator').text('connecting');
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { Session.set('at-vo-mode', '0'); disconnect(); } )
+						.on( 'click', params.disconnectCallback )
 						.removeAttr('disabled');
+					state = mode;
 					break;
+
 				case 'off':
 					$('#astrotools-ui-container .vo-mode-indicator').text('off')
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('on')
 						.off('click')
-						.on( 'click', function() { Session.set('at-vo-mode', '1'); connect(); } )
+						.on( 'click', params.connectCallback )
 						.removeAttr('disabled');
 					$('#astrotools-ui-container .button-rebroadcast-table').hide();
+					state = mode;
 					break;
+
+				default:
+					return state;
 			}
-		},
-		updateClientList: function() {
+		};
+	
+		this.updateClientList = function () {
 			var
 				$clientList = $('#astrotools-client-list');
 
-			UI.clientNames = {};
+			this.clientNames = {};
+			var clientNames = this.clientNames;
 			$clientList.html('');
 			$.each( ClientTracker.metas, function( id, meta ) {
-				if ( meta['samp.name'] ) UI.clientNames[ meta['samp.name'].toLowerCase() ] = 1;
+				if ( meta['samp.name'] ) clientNames[ meta['samp.name'].toLowerCase() ] = 1;
 				if ( meta['samp.name'] && id != 'hub' && meta['samp.name'] != 'AstroTools' ) {
 					$clientList.append(
 						 $('<li>', { text: meta['samp.name'], title: meta['samp.description.text'] } ).prepend( $('<img>', { src: meta['samp.icon.url'] } ) )
 					);
 				}
 			});
-			UI.updateVOMenu();
-		},
-		clearClientList: function() {
+			this.updateVOMenu();
+		};
+
+		this.clearClientList = function () {
 			$('#astrotools-client-list').html('');
-		},
-		updateVOMenu: function() {
+		};
+
+		this.updateVOMenu = function () {
 			var
 				$VOMenu = $('#astrotools-vo-menu');
 
 			$VOMenu.html('');
 			$.each( VOMenu, function( k, item ) {
-				if ( UI.clientNames[ item.name ] ) return;
+				if ( this.clientNames && this.clientNames[ item.name ] ) return;
 				var
 					$link = $('<a>', { href: "javascript:window.location='"+item.link+"'", text: item.title } ),
 					$li = $('<li>').prepend( $link );
@@ -114,10 +119,22 @@ var AstroTools = (function() {
 				});
 				$VOMenu.append(	$li );
 			});
+		};
+
+		if ( params.appendToBody ) {
+			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul><ul id="astrotools-vo-menu"></ul></div>');
+		};
+		this.updateVOMenu();
+		if ( params.initState ) {
+			this.VOMode('on');
 		}
+		else {
+			this.VOMode('off');
+		}
+
 	};
 
-	function init( options ) {
+	function init ( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
 		var tableOptions;
@@ -130,17 +147,23 @@ var AstroTools = (function() {
 			VOMenu        = options['VOMenu']        || VOMenu;
 		}
 
-		UI.init();
-		// if we store private-key on cookies we no need anymore to disconnect on unload
-		// $(window).unload( disconnect );
-
-		makeLinksBroadcastable();
-
 		if ( this.tableId && $('#'+this.tableId).length ) {
 			table = new Table( this.tableId, tableOptions );
 			AstroTools.table = table;
 			table.makeSortable();
 		}
+
+		_ui = new UI({
+			initState: !!SAMPConnection,
+			table: table,
+			appendToBody: appendToBody,
+			connectCallback: function () { Session.set( 'at-vo-mode', 1 ); connect(); },
+			disconnectCallback: function () { Session.set( 'at-vo-mode', 0 ); disconnect(); }
+		});
+		// if we store private-key on cookies we no need anymore to disconnect on unload
+		// $(window).unload( disconnect );
+
+		makeLinksBroadcastable();
 
 		//NB can we check session for previous connection and re-use it?
 		if ( Session.get('at-vo-mode') == 1 ) connect();
@@ -177,7 +200,7 @@ var AstroTools = (function() {
 	}
 
 	function connect() {
-		UI.VOMode('connecting');
+		_ui.VOMode('connecting');
 		var pk = getPrivateKey();
 		if ( pk && pk != undefined ) {
 			onConnect( new samp.Connection({ 'samp.private-key': pk }) );
@@ -189,8 +212,8 @@ var AstroTools = (function() {
 	function onError() {
 		SAMPConnection.close;
 		setPrivateKey( '' );
-		UI.VOMode('off');
-		UI.clearClientList();
+		_ui.VOMode('off');
+		_ui.clearClientList();
 	}
 
 	function noop() {	}
@@ -206,8 +229,8 @@ var AstroTools = (function() {
 			table.disableCoordinatesHandler();
 		}
 		SAMPConnection = undefined;
-		UI.clearClientList();
-		UI.VOMode('off');
+		_ui.clearClientList();
+		_ui.VOMode('off');
 		if ( isHubOnlineInterval ) clearInterval( isHubOnlineInterval );
 		if ( waitingForHubInterval ) clearInterval( waitingForHubInterval );
 	}
@@ -216,7 +239,7 @@ var AstroTools = (function() {
 		SAMPConnection = connection;
 		declareMetadata();
 		ClientTracker = new samp.ClientTracker();
-		ClientTracker.onchange = UI.updateClientList;
+		ClientTracker.onchange = _ui.updateClientList.bind( _ui );//TODO possible IE<9 problem
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
 		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
@@ -233,7 +256,7 @@ var AstroTools = (function() {
 				Session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
 			}
 		}
-		UI.VOMode('on');
+		_ui.VOMode('on');
 	}
 
 	function onHubCheck( result ) {
@@ -254,11 +277,11 @@ var AstroTools = (function() {
 	function onConnectionError( e ) {
 		if ( e.faultCode == 1 ) {
 			alert('Unable to connect to hub.');
-			UI.VOMode('off');
+			_ui.VOMode('off');
 			return;
 		}
 		// launch defined samp hub through jnlp
-		document.location = absolutizeURL( defaultHubUrl );
+		document.location = Utils.absolutizeURL( defaultHubUrl );
 		waitingForHubInterval = setInterval(function() {samp.ping( onPingResult );}, 5000);
 	}
 
@@ -535,7 +558,7 @@ var AstroTools = (function() {
 	return {
 		init: init,
 		Table: Table,
-		Utils: Utils
+		Utils: Utils,
 		ClientTracker: ClientTracker,
 		VOMenu: VOMenu
 	}
