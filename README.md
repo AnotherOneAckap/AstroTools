@@ -42,6 +42,7 @@ You can pass options object to initialization function:
 
 + _iconUrl_ absolute or relative path to client icon to display in hub window
 + _defaultHubUrl_ absolute or relative path to default hub ( .jnlp file to load and launch )
++ _appendToBody_ boolean, true (default) — AstroTools would create HTML for its UI, false — you carry for AstroTools UI
 + _tableOptions_  object which passed to Table constructor options argument 
 + _VOMenu_  a list of launchers shown in AstroTools panel, default is
 

@@ -5,6 +5,7 @@ var AstroTools = (function() {
 		waitingForHubInterval,
 		isHubOnlineInterval,
 		defaultHubUrl = 'topcat-lite.jnlp',
+		appendToBody = true,
 		iconUrl = 'img/icon.png',
 		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
 		table,
@@ -13,10 +14,25 @@ var AstroTools = (function() {
 			{ name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
 		];
 
+	var Utils = {
+		absolutizeURL: function ( url ) {
+			// url may be already full
+			// url may be path relative host root (href="/foo")
+			// else it's path relative current location (href="bar")
+			return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'/') + url;
+		},
+		sexaToDec: function ( sexa ) {
+			var parts = sexa.split(':');
+			return 3600 * parts[0] + 60 * parts[1] + 1 * parts[2];
+		}
+	};
+
 	var UI = {
 		clientNames: {},
-		init: function() {
-			$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul><ul id="astrotools-vo-menu"></ul></div>');
+		init: function ( params ) {
+			if ( params.appendToBody ) {
+				$('body').append('<div id="astrotools-ui-container"><span class="vo-mode-indicator"></span><button class="vo-mode-switcher"></button><button class="button-rebroadcast-table">Re-broadcast table "<span class="table-name"></span>"</button><ul id="astrotools-client-list"></ul><ul id="astrotools-vo-menu"></ul></div>');
+			};
 			UI.updateVOMenu();
 			if ( SAMPConnection ) {
 				UI.VOMode('on');
@@ -32,7 +48,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { session.set('at-vo-mode', '0'); disconnect(); } )
+						.on( 'click', function() { Session.set('at-vo-mode', '0'); disconnect(); } )
 						.removeAttr('disabled');
 					if ( table ) {
 						$('#astrotools-ui-container .button-rebroadcast-table').on('click', function() {
@@ -48,7 +64,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', function() { session.set('at-vo-mode', '0'); disconnect(); } )
+						.on( 'click', function() { Session.set('at-vo-mode', '0'); disconnect(); } )
 						.removeAttr('disabled');
 					break;
 				case 'off':
@@ -56,7 +72,7 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('on')
 						.off('click')
-						.on( 'click', function() { session.set('at-vo-mode', '1'); connect(); } )
+						.on( 'click', function() { Session.set('at-vo-mode', '1'); connect(); } )
 						.removeAttr('disabled');
 					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					break;
@@ -99,13 +115,14 @@ var AstroTools = (function() {
 				$VOMenu.append(	$li );
 			});
 		}
-	}
+	};
 
 	function init( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
 		var tableOptions;
 		if ( options instanceof Object ) {
+			appendToBody  = options['appendToBody'] === false ? false : true;
 			defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
 			iconUrl       = options['iconUrl']       || iconUrl;
 			tableOptions  = options['tableOptions']  || {};
@@ -126,7 +143,7 @@ var AstroTools = (function() {
 		}
 
 		//NB can we check session for previous connection and re-use it?
-		if ( session.get('at-vo-mode') == 1 ) connect();
+		if ( Session.get('at-vo-mode') == 1 ) connect();
 		
 		AstroTools.isStarted = true;
 	}
@@ -139,7 +156,7 @@ var AstroTools = (function() {
 			var $button = $('<button>', { 'type': 'button', 'text': 'Broadcast', 'class': 'vo-broadcast-button' });
 			$link.after($button);
 			$button.on('click', function() {
-				var params = {'url': absolutizeURL( $link.attr('href') ) };
+				var params = {'url': Utils.absolutizeURL( $link.attr('href') ) };
 				if ( $link.attr('data-vo-table-id') ) params['table-id'] = $link.attr('data-vo-table-id');
 				if ( $link.attr('data-vo-table-name') ) params['name'] = $link.attr('data-vo-table-name');
 
@@ -161,7 +178,7 @@ var AstroTools = (function() {
 
 	function connect() {
 		UI.VOMode('connecting');
-		var pk = session.get('at-private-key');
+		var pk = getPrivateKey();
 		if ( pk && pk != undefined ) {
 			onConnect( new samp.Connection({ 'samp.private-key': pk }) );
 			return;
@@ -171,7 +188,7 @@ var AstroTools = (function() {
 
 	function onError() {
 		SAMPConnection.close;
-		session.set( 'at-private-key', '' );
+		setPrivateKey( '' );
 		UI.VOMode('off');
 		UI.clearClientList();
 	}
@@ -182,7 +199,7 @@ var AstroTools = (function() {
 	function disconnect() {
 		if ( SAMPConnection ) {
 			SAMPConnection.close();
-			session.set( 'at-private-key', '' );
+			setPrivateKey( '' );
 		}
 		if ( table ) {
 			table.disableRowHighlighting();
@@ -203,17 +220,17 @@ var AstroTools = (function() {
 		ClientTracker.init( connection );
 		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
 		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
-		session.set( 'at-private-key', SAMPConnection.regInfo['samp.private-key'] );
+		setPrivateKey( SAMPConnection.regInfo['samp.private-key'] );
 
 		if ( table ) {
 			table.SAMPConnection = SAMPConnection;
 			table.enableCoordinatesHandler();
 			table.enableRowHighlighting();
-			var broadcastedTables = JSON.parse( session.get('at-table-broadcasted') ) || {};
+			var broadcastedTables = JSON.parse( Session.get('at-table-broadcasted') ) || {};
 			if ( ! broadcastedTables[ table.id ] ) {
 				table.broadcast();
 				broadcastedTables[table.id] = 1;
-				session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
+				Session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
 			}
 		}
 		UI.VOMode('on');
@@ -227,7 +244,7 @@ var AstroTools = (function() {
 		SAMPConnection.declareMetadata([{
 			'samp.name': 'AstroTools',
 			'samp.description.text': 'Simple toolbox',
-			'samp.icon.url': absolutizeURL( iconUrl ),
+			'samp.icon.url': Utils.absolutizeURL( iconUrl ),
 			'home.page': 'https://github.com/AnotherOneAckap/AstroTools',
 			'author.name': 'Askar Timirgazin, Ivan Zolotukhin',
 			'author.email': 'anotheroneackap@gmail.com'
@@ -256,7 +273,7 @@ var AstroTools = (function() {
 	}
 
 	//TODO use web storage and fallback to cookies or server-side session
-  var session = {
+  var Session = {
 		// simple functions for cookies from http://www.w3schools.com/js/js_cookies.asp
 		set: function( c_name, value, exdays ) {
 			var exdate=new Date();
@@ -285,6 +302,14 @@ var AstroTools = (function() {
 		}
   };
 
+	function getPrivateKey () {
+		return Session.get('at-private-key');
+	}
+
+	function setPrivateKey ( key ) {
+		return Session.set( 'at-private-key', key );
+	}
+
 	// Table class
 	function Table( tableId, options ) {
 		var $table = $( document.getElementById(tableId) );
@@ -292,7 +317,7 @@ var AstroTools = (function() {
 		this.$table = $table;
 		this.id   = $table.attr('data-vo-table-id');
 		this.name = $table.attr('data-vo-table-name');
-		this.url  = absolutizeURL( $table.attr('data-vo-table-url') );
+		this.url  = Utils.absolutizeURL( $table.attr('data-vo-table-url') );
 
 		if ( options instanceof Object ) {
 			this.sortIcon.asc = options['sortIcon']['asc'] || this.sortIcon.asc;
@@ -507,22 +532,10 @@ var AstroTools = (function() {
 			this.SAMPConnection.notifyAll([message]);
 	}
 
-	function absolutizeURL( url ) {
-		// url may be already full
-		// url may be path relative host root (href="/foo")
-		// else it's path relative current location (href="bar")
-		return url.substr(0,4) == 'http' ?	url :  url.substr(0,1) == '/' ? location.protocol + '//' + location.host + url :   location.href.replace(/\/+[^/]+$/,'/') + url;
-	}
-
-  function sexaToDec(sexa) {
-    var parts = sexa.split(':');
-    return 3600 * parts[0] + 60 * parts[1] + 1 * parts[2];
-  }
-
 	return {
 		init: init,
 		Table: Table,
-		Utils: { 'absolutizeURL': absolutizeURL, 'sexaToDec': sexaToDec },
+		Utils: Utils
 		ClientTracker: ClientTracker,
 		VOMenu: VOMenu
 	}
