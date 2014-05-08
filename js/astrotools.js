@@ -1,7 +1,6 @@
 var AstroTools = (function() {
 	var
 		SAMPConnection,
-		ClientTracker,
 		waitingForHubInterval,
 		isHubOnlineInterval,
 		defaultHubUrl = 'topcat-lite.jnlp',
@@ -9,7 +8,6 @@ var AstroTools = (function() {
 		iconUrl = 'img/icon.png',
 		aladinScript = 'get Aladin(DSS2) #{coords} 15arcmin;sync;"UCAC3, #{name}" = get VizieR(UCAC3,allcolumns) #{coords} #{radius}arcmin;sync;set "UCAC3, #{name}" shape=triangle color=red',
 		table,
-		_ui,
 		VOMenu = [
 			{ name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=AladinBeta.jnlp' },
 			{ name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
@@ -28,33 +26,38 @@ var AstroTools = (function() {
 		}
 	};
 
-	var UI = function ( params ) {
+	// BEGIN UI class
+	function UI ( params ) {
 
 		this.clientNames = {};
 
+		this.showBroadcastTableButton = function ( table ) {
+			$('#astrotools-ui-container .button-rebroadcast-table').on( 'click', function () {
+				table.broadcast();
+			});
+			$('#astrotools-ui-container .button-rebroadcast-table .table-name').text( table.name );
+			$('#astrotools-ui-container .button-rebroadcast-table').show();
+		};
+
+		this.hideBroadcastTableButton = function () {
+			$('#astrotools-ui-container .button-rebroadcast-table').hide();
+		};
+
 		this.VOMode = function ( mode ) {
-			var state = 'off';
+			var state = 'disconnected';
 			switch ( mode ) {
 
-				case 'on':
+				case 'connected':
 					$('#astrotools-ui-container .vo-mode-indicator').text('on');
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
 						.on( 'click', params.disconnectCallback )
 						.removeAttr('disabled');
-					if ( params.table ) {
-						$('#astrotools-ui-container .button-rebroadcast-table').on( 'click', function () {
-							params.table.broadcast();
-						});
-						$('#astrotools-ui-container .button-rebroadcast-table .table-name').text( params.table.name );
-						$('#astrotools-ui-container .button-rebroadcast-table').show();
-					}
 					state = mode;
 					break;
 
 				case 'connecting':
-					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					$('#astrotools-ui-container .vo-mode-indicator').text('connecting');
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
@@ -64,7 +67,7 @@ var AstroTools = (function() {
 					state = mode;
 					break;
 
-				case 'off':
+				case 'disconnected':
 					$('#astrotools-ui-container .vo-mode-indicator').text('off')
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('on')
@@ -80,22 +83,24 @@ var AstroTools = (function() {
 			}
 		};
 	
-		this.updateClientList = function () {
+		var that = this;
+		this.onClientListChange = function ( id, type, data ) {
+			var core = this;
 			var
 				$clientList = $('#astrotools-client-list');
 
-			this.clientNames = {};
-			var clientNames = this.clientNames;
+			that.clientNames = {};
 			$clientList.html('');
-			$.each( ClientTracker.metas, function( id, meta ) {
-				if ( meta['samp.name'] ) clientNames[ meta['samp.name'].toLowerCase() ] = 1;
+
+			$.each( core.clientTracker.metas, function( id, meta ) {
+				if ( meta['samp.name'] ) that.clientNames[ meta['samp.name'].toLowerCase() ] = 1;
 				if ( meta['samp.name'] && id != 'hub' && meta['samp.name'] != 'AstroTools' ) {
 					$clientList.append(
 						 $('<li>', { text: meta['samp.name'], title: meta['samp.description.text'] } ).prepend( $('<img>', { src: meta['samp.icon.url'] } ) )
 					);
 				}
 			});
-			this.updateVOMenu();
+			that.updateVOMenu();
 		};
 
 		this.clearClientList = function () {
@@ -132,12 +137,19 @@ var AstroTools = (function() {
 			this.VOMode('off');
 		}
 
-	};
+	}
+	// END UI class
 
 	function init ( options ) {
 		if ( AstroTools.isStarted ) return undefined;
 		
-		var tableOptions;
+		var
+			tableOptions,
+			session = new Session(),
+			core = new Core();
+
+		core.session = session;
+
 		if ( options instanceof Object ) {
 			appendToBody  = options['appendToBody'] === false ? false : true;
 			defaultHubUrl = options['defaultHubUrl'] || defaultHubUrl;
@@ -147,31 +159,53 @@ var AstroTools = (function() {
 			VOMenu        = options['VOMenu']        || VOMenu;
 		}
 
-		if ( this.tableId && $('#'+this.tableId).length ) {
-			table = new Table( this.tableId, tableOptions );
-			AstroTools.table = table;
-			table.makeSortable();
+		ui = new UI({
+			initState: !!core.state,
+			appendToBody: appendToBody,
+			connectCallback: function () { session.set( 'at-vo-mode', 1 ); core.connect(); },
+			disconnectCallback: function () { session.set( 'at-vo-mode', 0 ); core.disconnect(); }
+		});
+
+		if ( options.tableId && $( '#' + options.tableId ).length ) {
+			core.callbacks.onStateChange.push( function ( newState, oldState ) {
+				if ( newState == 'connected' ) {
+					tableOptions['clientTracker'] = this.clientTracker;
+					table = new Table( options.tableId, tableOptions );
+					table.makeSortable();
+
+					table.SAMPConnection = this.connection;
+					table.enableCoordinatesHandler();
+					table.enableRowHighlighting();
+					var broadcastedTables = JSON.parse( this.session.getBroadcastedTables() ) || {};
+					if ( ! broadcastedTables[ table.id ] ) {
+						table.broadcast();
+						broadcastedTables[table.id] = 1;
+						this.session.setBroadcastedTables( JSON.stringify(broadcastedTables) );
+					}
+					ui.showBroadcastTableButton( table );
+				}
+				else {
+					ui.hideBroadcastTableButton();
+				}
+			});
 		}
 
-		_ui = new UI({
-			initState: !!SAMPConnection,
-			table: table,
-			appendToBody: appendToBody,
-			connectCallback: function () { Session.set( 'at-vo-mode', 1 ); connect(); },
-			disconnectCallback: function () { Session.set( 'at-vo-mode', 0 ); disconnect(); }
+		core.callbacks.onStateChange.push( function ( newState, oldState ) {
+			ui.VOMode( newState );
+			if ( newState == 'connected' ) {
+				makeLinksBroadcastable( this.connection );
+			}
 		});
+		core.callbacks.onClientListChange.push( ui.onClientListChange );
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
 
-		makeLinksBroadcastable();
-
-		//NB can we check session for previous connection and re-use it?
-		if ( Session.get('at-vo-mode') == 1 ) connect();
+		if ( session.getVOMode() == 1 ) core.connect();
 		
 		AstroTools.isStarted = true;
 	}
 
-	function makeLinksBroadcastable() {
+	function makeLinksBroadcastable( SAMPConnection ) {
 		$('.at-table-link').on( 'mouseover', function() {
 			if ( ! SAMPConnection || SAMPConnection.closed ) return;
 			var $link = $(this);
@@ -199,141 +233,163 @@ var AstroTools = (function() {
 		});
 	}
 
-	function connect() {
-		_ui.VOMode('connecting');
-		var pk = getPrivateKey();
+	// BEGIN Core class 
+	function Core () {
+		this.callbacks = {
+			onStateChange: [],
+			onClientListChange: []
+		};
+		this.state = 'disconnected';
+	}
+
+	Core.prototype.connect = function () {
+		this.changeState('connecting');
+		var pk = this.session.getPrivateKey();
 		if ( pk && pk != undefined ) {
-			onConnect( new samp.Connection({ 'samp.private-key': pk }) );
-			return;
+			this.setConnection( new samp.Connection({ 'samp.private-key': pk }) );
+			return true;
 		}
-		samp.register( 'AstroTools', onConnect, onConnectionError );
-	}
+		samp.register( 'AstroTools', this.setConnection.bind(this), onConnectionError.bind(this) );
+	};
 
-	function onError() {
-		SAMPConnection.close;
-		setPrivateKey( '' );
-		_ui.VOMode('off');
-		_ui.clearClientList();
-	}
-
-	function noop() {	}
-	function errorHandler( error ) { if ( window.console ) console.error( error ) }
-
-	function disconnect() {
-		if ( SAMPConnection ) {
-			SAMPConnection.close();
-			setPrivateKey( '' );
+	Core.prototype.disconnect = function () {
+		var that = this;
+		if ( that.connection ) {
+			that.connection.close();
+			that.session.setPrivateKey( '' );
 		}
 		if ( table ) {
 			table.disableRowHighlighting();
 			table.disableCoordinatesHandler();
 		}
-		SAMPConnection = undefined;
-		_ui.clearClientList();
-		_ui.VOMode('off');
+		that.connection = undefined;
+		that.changeState('disconnected');
 		if ( isHubOnlineInterval ) clearInterval( isHubOnlineInterval );
 		if ( waitingForHubInterval ) clearInterval( waitingForHubInterval );
-	}
+	};
 
-	function onConnect( connection ) {
-		SAMPConnection = connection;
-		declareMetadata();
-		ClientTracker = new samp.ClientTracker();
-		ClientTracker.onchange = _ui.updateClientList.bind( _ui );//TODO possible IE<9 problem
-		ClientTracker.init( connection );
-		SAMPConnection.setCallable( ClientTracker, function() { SAMPConnection.declareSubscriptions([{'*':{}}]) } );
-		isHubOnlineInterval = setInterval(function() {samp.ping( onHubCheck );}, 3000);
-		setPrivateKey( SAMPConnection.regInfo['samp.private-key'] );
+	Core.prototype.changeState = function ( newState ) {
+		var that = this;
+		$.each( that.callbacks.onStateChange, function ( i, callback ) {
+			callback.call( that, newState, that.state );
+		});
+		that.state = newState;
+	};
 
-		if ( table ) {
-			table.SAMPConnection = SAMPConnection;
-			table.enableCoordinatesHandler();
-			table.enableRowHighlighting();
-			var broadcastedTables = JSON.parse( Session.get('at-table-broadcasted') ) || {};
-			if ( ! broadcastedTables[ table.id ] ) {
-				table.broadcast();
-				broadcastedTables[table.id] = 1;
-				Session.set( 'at-table-broadcasted', JSON.stringify(broadcastedTables) );
-			}
-		}
-		_ui.VOMode('on');
-	}
+	Core.prototype.setConnection = function ( connection ) {
+		var that = this;
+		that.connection = connection;
 
-	function onHubCheck( result ) {
-		if ( ! result ) disconnect()
-	}
-
-	function declareMetadata() {
-		SAMPConnection.declareMetadata([{
+		that.connection.declareMetadata([{
 			'samp.name': 'AstroTools',
 			'samp.description.text': 'Simple toolbox',
 			'samp.icon.url': Utils.absolutizeURL( iconUrl ),
 			'home.page': 'https://github.com/AnotherOneAckap/AstroTools',
 			'author.name': 'Askar Timirgazin, Ivan Zolotukhin',
 			'author.email': 'anotheroneackap@gmail.com'
-		}], noop, onError );
-	}
+		}], jQuery.noop, that.disconnect.bind(that) );
+
+		that.clientTracker = new samp.ClientTracker();
+		that.clientTracker.onchange = function (id, type, data) {
+			$.each( that.callbacks.onClientListChange, function ( i, callback ) {
+				callback.call( that, id, type, data );
+			});
+		};
+
+		that.clientTracker.init( connection );
+
+		that.connection.setCallable( that.clientTracker, function () { that.connection.declareSubscriptions([{'*':{}}]) } );
+
+		isHubOnlineInterval = setInterval( function () {
+			samp.ping( function ( result ) {
+				if ( ! result ) that.disconnect()
+			})
+		}, 3000 );
+
+		that.session.setPrivateKey( that.connection.regInfo['samp.private-key'] );
+
+		that.changeState('connected');
+	};
 
 	function onConnectionError( e ) {
+		var that = this;
 		if ( e.faultCode == 1 ) {
 			alert('Unable to connect to hub.');
-			_ui.VOMode('off');
+			that.changeState('disconnected');
 			return;
 		}
 		// launch defined samp hub through jnlp
 		document.location = Utils.absolutizeURL( defaultHubUrl );
-		waitingForHubInterval = setInterval(function() {samp.ping( onPingResult );}, 5000);
-	}
+		waitingForHubInterval = setInterval( function () { samp.ping( onPingResult ); }, 5000);
 
-	function onPingResult( pingResult ) {
-		if ( pingResult == true ) {
-			connect();
-			clearInterval( waitingForHubInterval );
-		}
-		else {
-		//TODO append timeout handling?
-		}
-	}
-
-	//TODO use web storage and fallback to cookies or server-side session
-  var Session = {
-		// simple functions for cookies from http://www.w3schools.com/js/js_cookies.asp
-		set: function( c_name, value, exdays ) {
-			var exdate=new Date();
-			exdate.setDate(exdate.getDate() + exdays);
-			var c_value=escape(value) + "; path=/;" + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-			document.cookie=c_name + "=" + c_value;
-		},
-		get: function ( c_name ) {
-			var c_value = document.cookie;
-			var c_start = c_value.indexOf(" " + c_name + "=");
-			if (c_start == -1) {
-				c_start = c_value.indexOf(c_name + "=");
-			}
-			if (c_start == -1) {
-				c_value = null;
+		function onPingResult( pingResult ) {
+			if ( pingResult == true ) {
+				that.connect();
+				clearInterval( waitingForHubInterval );
 			}
 			else {
-				c_start = c_value.indexOf("=", c_start) + 1;
-				var c_end = c_value.indexOf(";", c_start);
-				if (c_end == -1) {
-					c_end = c_value.length;
-				}
-				c_value = unescape(c_value.substring(c_start,c_end));
+			//TODO append timeout handling?
 			}
-			return c_value;
 		}
-  };
-
-	function getPrivateKey () {
-		return Session.get('at-private-key');
 	}
+	// END Core class 
 
-	function setPrivateKey ( key ) {
-		return Session.set( 'at-private-key', key );
-	}
+	//TODO use web storage and fallback to cookies or server-side session
+	// BEGIN Session class 
+	function Session () {};
 
-	// Table class
+	// simple functions for cookies from http://www.w3schools.com/js/js_cookies.asp
+	Session.prototype.set = function( c_name, value, exdays ) {
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + "; path=/;" + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+	};
+
+	Session.prototype.get = function ( c_name ) {
+		var c_value = document.cookie;
+		var c_start = c_value.indexOf(" " + c_name + "=");
+		if (c_start == -1) {
+			c_start = c_value.indexOf(c_name + "=");
+		}
+		if (c_start == -1) {
+			c_value = null;
+		}
+		else {
+			c_start = c_value.indexOf("=", c_start) + 1;
+			var c_end = c_value.indexOf(";", c_start);
+			if (c_end == -1) {
+				c_end = c_value.length;
+			}
+			c_value = unescape(c_value.substring(c_start,c_end));
+		}
+		return c_value;
+	};
+
+
+	Session.prototype.getPrivateKey = function () {
+			return this.get('at-private-key');
+	};
+
+	Session.prototype.getBroadcastedTables = function () {
+		return this.get('at-table-broadcasted');
+	};
+
+	Session.prototype.setBroadcastedTables = function ( value ) {
+		return this.set( 'at-table-broadcasted', value );
+	};
+
+	Session.prototype.setPrivateKey = function ( key ) {
+		return this.set( 'at-private-key', key );
+	};
+
+	Session.prototype.getVOMode = function () {
+		return this.get('at-vo-mode');
+	};
+
+	// END Session class 
+
+	// BEGIN Table class
 	function Table( tableId, options ) {
 		var $table = $( document.getElementById(tableId) );
 		if ( ! $table.length ) return;
@@ -343,14 +399,20 @@ var AstroTools = (function() {
 		this.url  = Utils.absolutizeURL( $table.attr('data-vo-table-url') );
 
 		if ( options instanceof Object ) {
-			this.sortIcon.asc = options['sortIcon']['asc'] || this.sortIcon.asc;
-			this.sortIcon.desc = options['sortIcon']['desc'] ||this.sortIcon.desc;
+			if ( options['sortIcon'] instanceof Object  ) {
+				this.sortIcon.asc = options['sortIcon']['asc'] || this.sortIcon.asc;
+				this.sortIcon.desc = options['sortIcon']['desc'] ||this.sortIcon.desc;
+			}
+			if ( options['clientTracker'] ) {
+				this.clientTracker = options['clientTracker'];
+			}
 		}
 
 		return this;
 	}
 
 	Table.prototype.sortIcon = { 'asc': '&#9650;', 'desc': '&#9660;' };
+	Table.prototype.errorHandler = function ( error ) { if ( window.console ) console.error( error ) };
 
 	Table.prototype.disableCoordinatesHandler = function() {
 		this.$table.off('click', '.at-table-cell-coords');
@@ -383,7 +445,7 @@ var AstroTools = (function() {
 					'script': script
 			});
 	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
-		  	that.SAMPConnection.notifyAll( [message], noop, errorHandler );
+		  	that.SAMPConnection.notifyAll( [message], jQuery.noop, that.errorHandler );
 
 			// sending to others
       var
@@ -395,14 +457,14 @@ var AstroTools = (function() {
 				'dec': dec.toString()
 			});
 	  	if ( that.SAMPConnection instanceof samp.Connection && ! that.SAMPConnection.closed ) 
-		  	that.SAMPConnection.notifyAll( [message], noop, errorHandler );
+		  	that.SAMPConnection.notifyAll( [message], jQuery.noop, that.errorHandler );
 		});
 	}
 
 	Table.prototype.disableRowHighlighting = function() {
 		this.$table.off( 'mouseover', 'tbody tr' );
 		this.$table.off( 'mouseout',  'tbody tr' );
-		if ( ClientTracker ) delete ClientTracker.callHandler['table.highlight.row'];
+		if ( this.clientTracker ) delete this.clientTracker.callHandler['table.highlight.row'];
 	}
 
 	Table.prototype.enableRowHighlighting = function() {
@@ -424,7 +486,7 @@ var AstroTools = (function() {
 		});
 
 		// table row highlighting receive
-		ClientTracker.callHandler['table.highlight.row'] = function(senderId, message, isCall) {
+		this.clientTracker.callHandler['table.highlight.row'] = function(senderId, message, isCall) {
 			var $row = that.$table.find('tr[data-index="' + message['samp.params']['row'] +'"]');
 			that.$table.find('.at-table-row-highlighted').removeClass('at-table-row-highlighted');
 			$row.addClass('at-table-row-highlighted');
@@ -554,12 +616,14 @@ var AstroTools = (function() {
 	  if ( this.SAMPConnection instanceof samp.Connection && ! this.SAMPConnection.closed ) 
 			this.SAMPConnection.notifyAll([message]);
 	}
+	// END Table class
 
 	return {
 		init: init,
 		Table: Table,
+		Core: Core,
 		Utils: Utils,
-		ClientTracker: ClientTracker,
+		Session: Session,
 		VOMenu: VOMenu
 	}
 })();
