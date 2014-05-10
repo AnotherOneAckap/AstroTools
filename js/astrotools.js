@@ -44,7 +44,9 @@ var AstroTools = (function() {
 		};
 
 		this.VOMode = function ( mode ) {
-			var state = 'disconnected';
+			var
+				state = 'disconnected',
+				that = this;
 			switch ( mode ) {
 
 				case 'connected':
@@ -52,7 +54,10 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', params.disconnectCallback )
+						.on( 'click', function () {
+							params.disconnectCallback();
+							that.clearClientList(); 
+						} )
 						.removeAttr('disabled');
 					state = mode;
 					break;
@@ -62,7 +67,10 @@ var AstroTools = (function() {
 					$('#astrotools-ui-container .vo-mode-switcher')
 						.text('off')
 						.off('click')
-						.on( 'click', params.disconnectCallback )
+						.on( 'click', function () {
+							params.disconnectCallback();
+							that.clearClientList(); 
+						} )
 						.removeAttr('disabled');
 					state = mode;
 					break;
@@ -76,6 +84,8 @@ var AstroTools = (function() {
 						.removeAttr('disabled');
 					$('#astrotools-ui-container .button-rebroadcast-table').hide();
 					state = mode;
+					that.clearClientList(); 
+					that.updateVOMenu();
 					break;
 
 				default:
@@ -112,18 +122,21 @@ var AstroTools = (function() {
 				$VOMenu = $('#astrotools-vo-menu');
 
 			$VOMenu.html('');
-			$.each( VOMenu, function( k, item ) {
-				if ( this.clientNames && this.clientNames[ item.name ] ) return;
-				var
-					$link = $('<a>', { href: "javascript:window.location='"+item.link+"'", text: item.title } ),
-					$li = $('<li>').prepend( $link );
+		$.each( VOMenu, function( k, item ) {
+				if ( that.clientNames && that.clientNames[ item.name ] ) return;
+			var
+				// if target here is _self (which is default), then client tracker stops working after clicking launcher
+				// strange behaviour have place in chrome and FF
+				// also trick with 'javascript:window.location=item.href' breaks clientTracker in chrome
+				$link = $('<a>', { target: '_top', href: item.link, text: item.title } ),
+				$li = $('<li>').prepend( $link );
 				$li.on( 'click', function() {
 					var $that = $(this);
 					$that.html('Waiting...'); 
 					setTimeout( function() { $that.html( $link ) }, 5000 );
 				});
-				$VOMenu.append(	$li );
-			});
+			$VOMenu.append(	$li );
+		});
 		};
 
 		if ( params.appendToBody ) {
@@ -131,10 +144,10 @@ var AstroTools = (function() {
 		};
 		this.updateVOMenu();
 		if ( params.initState ) {
-			this.VOMode('on');
+			this.VOMode( params.initState );
 		}
 		else {
-			this.VOMode('off');
+			this.VOMode('disconnected');
 		}
 
 	}
@@ -160,7 +173,7 @@ var AstroTools = (function() {
 		}
 
 		ui = new UI({
-			initState: !!core.state,
+			initState: core.state,
 			appendToBody: appendToBody,
 			connectCallback: function () { session.set( 'at-vo-mode', 1 ); core.connect(); },
 			disconnectCallback: function () { session.set( 'at-vo-mode', 0 ); core.disconnect(); }
@@ -298,7 +311,9 @@ var AstroTools = (function() {
 
 		that.clientTracker.init( connection );
 
-		that.connection.setCallable( that.clientTracker, function () { that.connection.declareSubscriptions([{'*':{}}]) } );
+		that.connection.setCallable( that.clientTracker, function () {
+			that.connection.declareSubscriptions([{'*':{}}]) } 
+		);
 
 		isHubOnlineInterval = setInterval( function () {
 			samp.ping( function ( result ) {
