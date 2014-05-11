@@ -175,8 +175,8 @@ var AstroTools = (function() {
 		ui = new UI({
 			initState: core.state,
 			appendToBody: appendToBody,
-			connectCallback: function () { session.set( 'at-vo-mode', 1 ); core.connect(); },
-			disconnectCallback: function () { session.set( 'at-vo-mode', 0 ); core.disconnect(); }
+			connectCallback: function () { session.setVOMode( true ); core.connect(); },
+			disconnectCallback: function () { session.setVOMode( false ); core.disconnect(); }
 		});
 
 		if ( options.tableId && $( '#' + options.tableId ).length ) {
@@ -213,7 +213,7 @@ var AstroTools = (function() {
 		// if we store private-key on cookies we no need anymore to disconnect on unload
 		// $(window).unload( disconnect );
 
-		if ( session.getVOMode() == 1 ) core.connect();
+		if ( session.getVOMode() ) core.connect();
 		
 		AstroTools.isStarted = true;
 	}
@@ -399,7 +399,11 @@ var AstroTools = (function() {
 	};
 
 	Session.prototype.getVOMode = function () {
-		return this.get('at-vo-mode');
+		return this.get('at-vo-mode') == '1' ? true : false;
+	};
+
+	Session.prototype.setVOMode = function ( mode ) {
+		return this.set( 'at-vo-mode', mode );
 	};
 
 	// END Session class 
