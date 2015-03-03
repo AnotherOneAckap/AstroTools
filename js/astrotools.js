@@ -11,7 +11,7 @@ var AstroTools = (function() {
 		table,
 		_ui,
 		VOMenu = [
-			{ name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/nph-aladin.pl?frame=get&id=AladinBeta.jnlp' },
+			{ name: 'aladin', title: 'launch Aladin', link: 'http://aladin.u-strasbg.fr/java/download/aladin.jnlp' },
 			{ name: 'topcat', title: 'launch Topcat', link: 'http://andromeda.star.bris.ac.uk/~mbt/topcat/topcat-full.jnlp' }
 		];
 
